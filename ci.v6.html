@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Choundeshwari | Customer App</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            /* DEFAULT (LIGHT) THEME */
+            --bg: #FFFFFF;
+            --surface: #F8F9FA;
+            --primary: #111111;
+            --secondary: #666666;
+            --accent: #C5A059; /* Elegant Gold */
+            --danger: #FF3B30;
+            --success: #34C759;
+            
+            --radius: 20px;
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --nav-height: 75px;
+            --nav-bg: rgba(255,255,255,0.95);
+            --border-color: #f0f0f0;
+            --input-bg: #fff;
+        }
+
+        /* DARK MODE OVERRIDES */
+        [data-theme="dark"] {
+            --bg: #090909;
+            --surface: #161616;
+            --primary: #FFFFFF;
+            --secondary: #A0A0A0;
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);
+            --nav-bg: rgba(20, 20, 20, 0.95);
+            --border-color: #2A2A2A;
+            --input-bg: #222;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: var(--bg); color: var(--primary);
+            font-family: 'Urbanist', sans-serif;
+            height: 100vh; width: 100vw; overflow: hidden;
+            display: flex; flex-direction: column;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed; top: 0; width: 100%; height: 65px; z-index: 100;
+            background: var(--nav-bg); backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; border-bottom: 1px solid var(--border-color);
+            transition: 0.3s;
+        }
+        .brand-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; }
+        .brand-logo span { color: var(--accent); }
+        
+        .header-icons { display: flex; gap: 15px; align-items: center; }
+        .icon-btn { position: relative; font-size: 1.2rem; cursor: pointer; color: var(--primary); }
+        .badge {
+            position: absolute; top: -5px; right: -5px; background: var(--primary); color: var(--bg);
+            width: 16px; height: 16px; border-radius: 50%; font-size: 0.6rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; display: none;
+        }
+
+        /* --- MAIN CONTENT --- */
+        main {
+            flex: 1; overflow-y: auto; padding-top: 65px; padding-bottom: 90px;
+            scroll-behavior: smooth; scrollbar-width: none;
+        }
+
+        .screen { display: none; animation: fadeIn 0.3s ease-out; padding: 20px; }
+        .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- COMPONENTS --- */
+        
+        /* 1. STORIES */
+        .story-rail { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; scrollbar-width: none; }
+        .story-item { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 70px; cursor: pointer; }
+        .story-ring {
+            width: 68px; height: 68px; border-radius: 50%; padding: 2px;
+            background: linear-gradient(45deg, var(--accent), #f1c40f);
+        }
+        .story-ring img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid var(--bg);
+        }
+        .story-item span { font-size: 0.75rem; font-weight: 600; }
+
+        /* 2. BANNERS */
+        .promo-banner {
+            width: 100%; height: 200px; border-radius: var(--radius); overflow: hidden; position: relative;
+            background: #000; margin-bottom: 25px; box-shadow: var(--shadow);
+        }
+        .promo-banner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+        .promo-text {
+            position: absolute; bottom: 0; left: 0; padding: 20px; color: #fff; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+        .promo-text h2 { font-family: 'Playfair Display'; margin-bottom: 5px; }
+        .promo-text button {
+            padding: 8px 16px; background: #fff; color: #000; border: none; border-radius: 20px;
+            font-weight: 700; font-size: 0.75rem; cursor: pointer; margin-top: 5px;
+        }
+
+        /* 3. PRODUCT GRID */
+        .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 15px; display: flex; justify-content: space-between; }
+        .section-title span { color: var(--accent); font-size: 0.8rem; cursor: pointer; }
+
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .product-card {
+            background: var(--surface); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color);
+            position: relative; transition: 0.2s;
+        }
+        .product-card:active { transform: scale(0.97); }
+        .p-img { height: 150px; width: 100%; object-fit: cover; background: #333; }
+        
+        .p-info { padding: 12px; }
+        .p-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .p-price { color: var(--accent); font-weight: 800; }
+        
+        /* --- NEW CARD ACTION BUTTONS --- */
+        .card-actions {
+            position: absolute; 
+            bottom: 10px; 
+            right: 10px; 
+            display: flex; 
+            gap: 8px; /* Space between buttons */
+        }
+
+        .action-btn {
+            width: 32px; 
+            height: 32px; 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .action-btn:active { transform: scale(0.9); }
+
+        /* Distinct colors for buttons */
+        .btn-try { 
+            background: var(--bg); 
+            color: var(--primary); 
+            border: 1px solid var(--border-color); 
+        }
+
+        .btn-add { 
+            background: var(--primary); 
+            color: var(--bg); 
+            border: none;
+        }
+
+        /* 4. VISUALIZER (AR CAMERA) */
+        .visualizer-box {
+            background: #000; height: 450px; border-radius: var(--radius); overflow: hidden;
+            position: relative; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;
+        }
+        .wall-preview { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        
+        /* LIVE CAMERA ELEMENT */
+        #camera-feed {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+            transform: scaleX(-1);
+            display: none;
+        }
+        
+        .frame-overlay {
+            width: 150px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6); pointer-events: auto;
+            border: 2px solid #fff; z-index: 10;
+            touch-action: none;
+        }
+        
+        .frame-selector {
+            display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;
+        }
+        .frame-opt {
+            min-width: 60px; height: 60px; border-radius: 12px; border: 2px solid transparent;
+            cursor: pointer; object-fit: cover;
+        }
+        .frame-opt.active { border-color: var(--accent); transform: scale(1.1); }
+
+        /* --- INPUTS & BUTTONS (Themed) --- */
+        input, select {
+            background: var(--input-bg); color: var(--primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        /* --- BOTTOM NAV --- */
+        .nav-bar {
+            position: fixed; bottom: 0; width: 100%; height: var(--nav-height);
+            background: var(--nav-bg); border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-around; align-items: center; z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            color: var(--secondary); font-size: 1.4rem; cursor: pointer; transition: 0.2s;
+        }
+        .nav-item.active { color: var(--primary); }
+        .nav-item span { font-size: 0.65rem; font-weight: 700; }
+
+        /* --- TOAST --- */
+        .toast {
+            position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: var(--bg); padding: 10px 20px; border-radius: 30px;
+            font-size: 0.8rem; font-weight: 600; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 2000;
+        }
+        .toast.show { opacity: 1; top: 90px; }
+
+        /* --- UTILS --- */
+        .btn-full {
+            width: 100%; padding: 15px; background: var(--primary); color: var(--bg);
+            border: none; border-radius: 15px; font-weight: 700; font-size: 1rem; margin-top: 15px;
+        }
+        .btn-row { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-outline {
+            flex: 1; padding: 12px; border: 1px solid var(--border-color); background: var(--surface); color: var(--primary);
+            border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
+        /* --- VOICE SEARCH STYLES --- */
+        .search-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 15px; /* Extra padding on right for Mic */
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--input-bg);
+            color: var(--primary);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .mic-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .mic-icon.listening {
+            color: var(--danger);
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        /* --- PRODUCT DETAILS PAGE (PDP) --- */
+        
+        /* --- FIXED BACK BUTTON POSITION --- */
+        .pdp-header {
+            position: absolute; 
+            top: 65px; /* MOVED DOWN TO AVOID OVERLAP */
+            left: 20px; 
+            z-index: 100; 
+            width: 45px; 
+            height: 45px; 
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px); 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: #ffffff; 
+            transition: 0.2s;
+        }
+
+        .pdp-header:active { transform: scale(0.9); }
+
+        .pdp-image-container {
+            width: 100%; 
+            height: 45vh; 
+            background: #ffffff;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pdp-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+        }
+
+        .pdp-content {
+            padding: 20px; border-radius: 30px 30px 0 0; 
+            background: var(--bg); margin-top: -30px; position: relative;
+            min-height: 400px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+        }
+
+        .pdp-title { font-family: 'Playfair Display'; font-size: 1.8rem; margin-bottom: 10px; }
+        .pdp-price { font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-bottom: 20px; }
+        .pdp-desc { color: var(--secondary); line-height: 1.6; margin-bottom: 20px; }
+
+        .pdp-footer {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--bg); padding: 15px 20px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            display: flex; gap: 15px; z-index: 200;
+        }
+
+        /* --- FULL SCREEN LIGHTBOX --- */
+        .lightbox {
+            position: fixed; inset: 0; z-index: 2500;
+            background: rgba(0,0,0,0.95);
+            display: none; 
+            align-items: center; justify-content: center;
+            animation: fadeIn 0.2s ease-out;
+        }
+        .lightbox img {
+            max-width: 100%; max-height: 100%;
+            object-fit: contain;
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
+        
+        .lightbox-close {
+            position: absolute; 
+            top: 40px; 
+            right: 20px;
+            color: #fff; 
+            font-size: 1.5rem; 
+            cursor: pointer;
+            z-index: 2600;
+            background: rgba(255,255,255,0.2);
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        /* --- FOUNDER PROFILE CARD --- */
+.founder-card {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+    padding: 30px 20px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative Circle in background */
+.founder-card::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 150px; height: 150px;
+    background: var(--accent);
+    opacity: 0.1;
+    border-radius: 50%;
+}
+
+.founder-img {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--bg);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+
+.founder-name {
+    font-size: 1.5rem; font-weight: 800; font-family: 'Playfair Display';
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-bottom: 5px;
+}
+
+.verified-badge {
+    position: absolute;
+    /* This centers it relative to the avatar */
+    bottom: 15px; 
+    left: 50%;
+    transform: translateX(35px); /* Offsets it to the right of the center point */
+    background: #3897f0; 
+    color: #fff;
+    width: 24px; 
+    height: 24px;
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 0.8rem;
+    border: 2px solid var(--surface);
+    z-index: 5;
+}
+
+.founder-role {
+    color: var(--secondary); font-size: 0.9rem; font-weight: 600; 
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px;
+}
+
+/* 3-Grid Buttons */
+.contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+}
+
+.contact-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    padding: 15px; border-radius: 18px;
+    background: var(--bg); border: 1px solid var(--border-color);
+    color: var(--primary); font-size: 0.75rem; font-weight: 700;
+    cursor: pointer; transition: 0.2s;
+}
+.contact-btn i { font-size: 1.4rem; transition: 0.2s; }
+.contact-btn:active { transform: scale(0.95); background: var(--surface); }
+
+/* Button Specific Colors */
+.btn-wa i { color: #25D366; }
+.btn-ig i { color: #E1306C; }
+.btn-call i { color: var(--accent); }
+
+/* --- PRO FOUNDER PROFILE --- */
+.profile-container {
+    background: var(--surface);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.profile-cover {
+    height: 120px;
+    background: linear-gradient(45deg, #111, #333);
+    position: relative;
+}
+
+/* Decorative pattern on cover */
+.profile-cover::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(var(--accent) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.1;
+}
+
+.profile-avatar-box {
+    text-align: center;
+    margin-top: -60px; /* Pulls image up into cover */
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.profile-avatar {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 5px solid var(--surface); /* Thick border matches background */
+    object-fit: cover;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.verified-badge {
+    position: absolute;
+    bottom: 15px; right: 35%; /* Adjust based on image size */
+    background: #3897f0; color: #fff;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    border: 2px solid var(--surface);
+}
+
+.profile-info { text-align: center; padding: 0 20px 20px; }
+
+.profile-name {
+    font-size: 1.4rem; font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.profile-tag {
+    display: inline-block;
+    background: rgba(197, 160, 89, 0.1); /* Gold tint */
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* STATS ROW (Like Instagram/LinkedIn) */
+.profile-stats {
+    display: flex; justify-content: space-around;
+    padding: 15px 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.stat-item { display: flex; flex-direction: column; align-items: center; }
+.stat-val { font-size: 1.1rem; font-weight: 800; color: var(--primary); }
+.stat-label { font-size: 0.7rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ACTION BUTTONS */
+.profile-actions {
+    display: flex; gap: 10px;
+}
+
+.action-btn-lg {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primary-action { background: var(--primary); color: var(--bg); }
+.btn-secondary-action { background: transparent; border: 1px solid var(--border-color); color: var(--primary); }
+
+
+ /* ================= DESKTOP PREMIUM UI (Starts at 1024px) ================= */
+@media (min-width: 1024px) {
+    
+    body { 
+        flex-direction: row; /* Switch to Horizontal Layout */
+        background: #e0dddd; /* Professional light grey background */
+    }
+
+    /* 1. TRANSFORM BOTTOM NAV INTO SIDEBAR */
+    .nav-bar {
+        top: 0; left: 0;
+        width: 260px; /* Fixed Sidebar Width */
+        height: 100vh;
+        flex-direction: column; /* Stack icons vertically */
+        justify-content: flex-start;
+        padding-top: 120px; /* Space for Logo */
+        gap: 15px;
+        border-top: none; 
+        border-right: 1px solid rgba(0,0,0,0.06);
+        background: #f3f0f0;
+        align-items: flex-start; /* Align text left */
+    }
+    
+    /* Move Logo into Sidebar Area */
+    /* FIX: BRING LOGO TO FRONT */
+    header {
+        width: 260px; 
+        height: 100px;
+        left: 0; 
+        top: 0;
+        background: transparent; 
+        border: none;
+        justify-content: center; 
+        
+        /* This line brings branding back: */
+        z-index: 500; 
+        position: fixed;
+    }
+
+    /* Optional: Make the text bigger on Desktop */
+    .brand-logo {
+        font-size: 1.8rem;
+    }
+    .header-icons { display: none; /* Hide mobile icons on desktop */ }
+    
+    /* Sidebar Links Styling */
+    .nav-item {
+        flex-direction: row; gap: 15px; width: 90%;
+        margin-left: 5%;
+        padding: 15px 20px; border-radius: 12px;
+    }
+    .nav-item:hover { background: rgba(0,0,0,0.03); }
+    .nav-item.active { background: var(--primary); color: #2e2b2b; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    .nav-item span { font-size: 1rem; font-weight: 600; display: inline-block; }
+
+    /* 2. MAIN CONTENT AREA */
+    main {
+        flex: 1; padding: 40px 60px;
+        margin-left: 260px; /* Push content right to clear sidebar */
+        max-width: 1600px;
+        overflow-y: auto;
+    }
+
+    /* 3. HERO SECTION (Split Layout) */
+    .promo-banner {
+        height: 350px;
+        display: flex; align-items: center;
+        background: #000;
+    }
+    .promo-banner img { 
+        width: 60%; margin-left: auto; 
+        mask-image: linear-gradient(to left, black 60%, transparent 100%); 
+        -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%); 
+    }
+    .promo-text {
+        width: 50%; left: 0; height: 100%;
+        background: transparent;
+        display: flex; flex-direction: column; justify-content: center;
+        padding-left: 60px;
+        text-align: left;
+    }
+    .promo-text h2 { font-size: 3rem; line-height: 1.1; margin-bottom: 15px; }
+    .promo-text button { padding: 15px 40px; font-size: 1rem; width: fit-content; }
+
+    /* 4. PRODUCT GRID (4 Columns & Hover Effects) */
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 30px;
+    }
+    .product-card {
+        border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+        transform: translateY(-10px); /* Lift up effect */
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    .p-img { height: 220px; } /* Taller images */
+    
+    /* Reveal Actions on Hover */
+    .card-actions { opacity: 0; transition: 0.3s; transform: translateY(10px); }
+    .product-card:hover .card-actions { opacity: 1; transform: translateY(0); }
+
+    /* 5. SEARCH BAR (Desktop Centered) */
+    .search-box { max-width: 600px; margin: 0 auto 40px; }
+    
+    /* 6. PRODUCT MODAL (Professional Popup) */
+    #product-view.screen.active {
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        width: 900px; height: 600px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        z-index: 2000;
+        display: flex; /* Split Screen */
+        padding: 0;
+        overflow: hidden;
+    }
+    
+    /* Dim Background Overlay */
+    #product-view.screen.active::before {
+        content: ''; position: fixed; top: -500vh; left: -500vw; 
+        width: 1000vw; height: 1000vh; 
+        background: rgba(0,0,0,0.5); 
+        z-index: -1; pointer-events: none;
+    }
+
+    .pdp-image-container { width: 50%; height: 100%; background: #f8f9fa; border-right: 1px solid #eee; }
+    .pdp-content { width: 50%; height: 100%; padding: 50px 40px; margin: 0; overflow-y: auto; }
+    .pdp-title { font-size: 2.2rem; }
+    
+    /* Close Button (X) */
+    .pdp-header { 
+        top: 20px; left: auto; right: 20px; 
+        background: transparent; color: #000; 
+        border: 1px solid #ddd;
+    }
+    .pdp-header i::before { content: "\f00d"; } /* Change arrow to X icon */
+
+    .pdp-footer { 
+        position: absolute; bottom: 0; right: 0; 
+        width: 50%; padding: 20px 40px; 
+        background: rgba(255,255,255,0.9); backdrop-filter: blur(5px);
+    }
+}
+
+
+/* Custom Range Slider */
+input[type=range] {
+    -webkit-appearance: none;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px; width: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: -8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%; height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+}
+
+
+    </style>
+</head>
+<body>
+
+    <div id="toast" class="toast">Added to Cart</div>
+
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-close" onclick="closeLightbox()">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <img id="lightbox-img" src="">
+    </div>
+
+    <header>
+        <div class="brand-logo" id="brand-text">Choundeshwari <span>Digital</span></div>
+        <div class="header-icons">
+            <div class="icon-btn" onclick="toggleTheme()">
+                <i class="fa-solid fa-moon" id="theme-icon"></i>
+            </div>
+            <div class="icon-btn" onclick="openPage('cart')">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <div class="badge" id="cart-count">0</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <div id="home" class="screen active">
+            <div class="story-rail">
+                <div class="story-item" onclick="filterShop('Wedding')">
+                    <div class="story-ring"><img src="img/wedding.jpeg"></div>
+                    <span>Wedding</span>
+                </div>
+                <div class="story-item" onclick="filterShop('Baby')">
+                    <div class="story-ring"><img src="img/baby.png"></div>
+                    <span>Baby</span>
+                </div>
+                <div class="story-item" onclick="openPage('visualizer')">
+                    <div class="story-ring"><img src="img/magictooolfinal.png"></div>
+                    <span>Try-On</span>
+                </div>
+                <div class="story-item" onclick="openPage('cart')">
+                    <div class="story-ring"><img src="img/order.png"></div>
+                    <span>Orders</span>
+                </div>
+            </div>
+
+            <div class="promo-banner">
+                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=800">
+                <div class="promo-text">
+                    <h2>Capture Memories</h2>
+                    <p>Frame your Golden Memories.</p>
+                    <button onclick="nav('book', document.getElementById('nav-book'))">Frame Now</button>
+                </div>
+            </div>
+
+            <div class="section-title">
+                Trending Frames
+                <span onclick="nav('shop', document.getElementById('nav-shop'))">View All</span>
+            </div>
+            
+            <div class="product-grid" id="home-products"></div>
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center;">
+    <p style="font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">
+        Follow Our Work
+    </p>
+    <div style="display: flex; justify-content: center; gap: 20px; font-size: 1.5rem;">
+        <a href="https://youtube.com/@choundeshwaridigital?si=_iH4Lam69TE8FUaB target="_blank" style="color: #FF0000; transition: 0.2s;"><i class="fa-brands fa-youtube"></i></a>
+        
+        <a href="https://instagram.com/yashraj_photo_frame" target="_blank" style="color: #E1306C; transition: 0.2s;"><i class="fa-brands fa-instagram"></i></a>
+        
+        <a href="https://www.facebook.com/share/18KfViZVEd/" target="_blank" style="color: #1877F2; transition: 0.2s;"><i class="fa-brands fa-facebook"></i></a>
+        
+        <a href="https://share.google/zjv5YaJFvRsYliJ9u" target="_blank" style="color: #4285F4; transition: 0.2s;"><i class="fa-brands fa-google"></i></a>
+    </div>
+</div>
+        </div>
+
+        <div id="shop" class="screen">
+            <div class="search-box">
+                <input type="text" id="search-input" class="search-input" placeholder="Search God, Decor..." onkeyup="searchProd(this.value)">
+                <i class="fa-solid fa-microphone mic-icon" id="mic-btn" onclick="startVoiceSearch()"></i>
+            </div>
+            
+            <div style="display:flex; gap:10px; margin-bottom:20px; overflow-x:auto; scrollbar-width:none;">
+                <button onclick="renderShop('all')" style="padding:8px 16px; background:var(--primary); color:var(--bg); border-radius:20px; border:none; font-size:0.8rem;">All</button>
+                <button onclick="renderShop('god')" style="padding:8px 16px; background:var(--surface); color:var(--primary); border:1px solid var(--border-color); border-radius:20px; font-size:0.8rem;">God</button>
+                <button onclick="renderShop('decor')" style="padding:8px 16px; background:var(--surface); color:var(--primary); border:1px solid var(--border-color); border-radius:20px; font-size:0.8rem;">Decor</button>
+                <button onclick="renderShop('chatrapati')" style="padding:8px 16px; background:var(--surface); color:var(--primary); border:1px solid var(--border-color); border-radius:20px; font-size:0.8rem;">Chatrapati</button>
+                <button onclick="renderShop('custom')" style="padding:8px 16px; background:var(--surface); color:var(--primary); border:1px solid var(--border-color); border-radius:20px; font-size:0.8rem;">Custom</button>
+                <button onclick="renderShop('Dr. Ambedkar')" style="padding:8px 16px; background:var(--surface); color:var(--primary); border:1px solid var(--border-color); border-radius:20px; font-size:0.8rem;">Dr.Ambedkar</button>
+            </div>
+
+            <div class="product-grid" id="shop-container"></div>
+            
+            <div style="margin-top:30px; background:var(--accent); padding:20px; border-radius:15px; text-align:center; color:#fff;">
+                <h3 style="font-family:'Playfair Display'; margin-bottom:5px;">Custom Size?</h3>
+                <p style="font-size:0.8rem; margin-bottom:10px; color:rgba(255,255,255,0.9);">Need a specific size frame? Get a quote.</p>
+                <button onclick="requestQuote()" style="background:#fff; color:#000; padding:10px 20px; border-radius:20px; border:none; font-weight:700;">Ask Price</button>
+            </div>
+        </div>
+
+        <div id="visualizer" class="screen">
+    <h2 style="font-family:'Playfair Display'; margin-bottom:15px;">Magic Try-On</h2>
+    
+    <div class="visualizer-box">
+        <video id="camera-feed" autoplay playsinline></video>
+        <img id="wall-img" class="wall-preview" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600">
+        <img id="frame-overlay" class="frame-overlay" src="https://images.unsplash.com/photo-1549488497-61c022839b23?w=400">
+    </div>
+
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; padding:0 10px;">
+        <i class="fa-solid fa-image" style="font-size:0.8rem;"></i>
+        <input type="range" id="size-slider" min="50" max="300" value="150" style="flex:1;" oninput="resizeFrame(this.value)">
+        <i class="fa-solid fa-image" style="font-size:1.2rem;"></i>
+    </div>
+
+    <div class="btn-row">
+        <button class="btn-outline" onclick="startCamera()"><i class="fa-solid fa-video"></i> Live Camera</button>
+        <button class="btn-outline" onclick="document.getElementById('wall-up').click()"><i class="fa-solid fa-image"></i> Upload Photo</button>
+        <input type="file" id="wall-up" hidden accept="image/*" onchange="loadWall(event)">
+    </div>
+
+    <h4 style="margin-top:20px; margin-bottom:10px;">Select Frame</h4>
+    
+                <img src="img/hanuman1.png" class="frame-opt active" onclick="setFrame(this)">
+                <img src="img/swami.png" class="frame-opt" onclick="setFrame(this)">
+                <img src="img/laxmi2.png" class="frame-opt" onclick="setFrame(this)">
+            </div>
+        </div>
+
+        <div id="cart" class="screen">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:20px;">Your Cart</h2>
+            <div id="cart-items" style="display:flex; flex-direction:column; gap:15px;"></div>
+            <div id="cart-total" style="margin-top:20px; font-weight:800; font-size:1.2rem; text-align:right;"></div>
+            <button class="btn-full" onclick="checkoutWA()">Checkout on WhatsApp</button>
+        </div>
+
+        <div id="book" class="screen">
+    <h2 style="font-family:'Playfair Display'; margin-bottom:20px;">Studio Profile</h2>
+    
+    <div class="profile-container">
+        <div class="profile-cover"></div>
+        
+        <div class="profile-avatar-box">
+            <img src="img/bb.png" class="profile-avatar">
+            <div class="verified-badge"><i class="fa-solid fa-check"></i></div>
+        </div>
+        
+
+        <div class="profile-info">
+            <div class="profile-name">Madhav Jadhav</div>
+            <div class="profile-tag">Founder & Lead</div>
+
+            
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-val">20+</span>
+                    <span class="stat-label">Lagacy</span>
+                </div>
+                <div class="stat-item">
+        <img src="img/Gtrusted.png" style="width: 25px; height: 25px; border-radius: 50%; object-fit: cover; margin-bottom: 2px;">
+        <span class="stat-label">G Trusted</span>
+    </div>
+                <div class="stat-item">
+                    <span class="stat-val">4.8</span>
+                    <span class="stat-label">Rating <i class="fa-solid fa-star" style="color:#f1c40f; font-size:0.7rem;"></i></span>
+                </div>
+
+            
+            </div>
+
+            
+
+            <div class="profile-actions">
+                <button class="action-btn-lg btn-primary-action" onclick="window.location.href='tel:+917588598293'">
+                    <i class="fa-solid fa-phone"></i> Call Now
+                </button>
+                <button class="action-btn-lg btn-secondary-action" onclick="window.open('https://wa.me/917588598293')">
+                    <i class="fa-brands fa-whatsapp"></i> Chat
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <h4 style="margin-bottom:15px; font-weight:800; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-calendar-check" style="color:var(--accent);"></i> Book a Session
+    </h4>
+    
+    <div style="background:var(--surface); padding:20px; border-radius:24px; border:1px solid var(--border-color);">
+        <input type="text" id="cust-name" placeholder="Your Name" style="width:100%; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary);">
+        
+        <select id="cust-service" style="width:100%; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary);">
+            <option>Wedding Photography</option>
+            <option>Baby Shoot</option>
+            <option>Pre-Wedding</option>
+            <option>Passport Photo</option>
+            <option>Event Videography</option>
+        </select>
+        
+        <button class="btn-full" onclick="sendBooking()" style="margin-top:5px; background:var(--accent); color:#fff;">
+            Request Booking
+        </button>
+    </div>
+
+    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center;">
+    <p style="font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">
+        Follow Our Work
+    </p>
+    <div style="display: flex; justify-content: center; gap: 20px; font-size: 1.5rem;">
+        <a href="https://youtube.com/@choundeshwaridigital?si=_iH4Lam69TE8FUaB target="_blank" style="color: #FF0000; transition: 0.2s;"><i class="fa-brands fa-youtube"></i></a>
+        
+        <a href="https://instagram.com/yashraj_photo_frame" target="_blank" style="color: #E1306C; transition: 0.2s;"><i class="fa-brands fa-instagram"></i></a>
+        
+        <a href="https://www.facebook.com/share/18KfViZVEd/" target="_blank" style="color: #1877F2; transition: 0.2s;"><i class="fa-brands fa-facebook"></i></a>
+        
+        <a href="https://share.google/zjv5YaJFvRsYliJ9u" target="_blank" style="color: #4285F4; transition: 0.2s;"><i class="fa-brands fa-google"></i></a>
+    </div>
+</div>
+
+<div style="margin-top: 1px; padding-top: 8px; border-top: 1px solid var(--border-color); text-align: center;">
+    <p style="font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">
+        Developed By
+        
+    </p>
+
+
+<div style="display: flex; justify-content: center; gap: 2px; font-size: 1.5rem;">
+<p style="font-size: 0.9rem; font: bold; font-weight: 900; color: rgb(156, 102, 102); margin-top: 1px; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 1px;">
+        YASHRAJ JADHAV 
+    </p>
+</div>
+</div>
+
+            
+
+        <div id="product-view" class="screen" style="padding:0; padding-bottom:100px;">
+            <div class="pdp-header" onclick="closeProduct()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            
+            <div class="pdp-image-container">
+                <img id="view-img" class="pdp-img" src="" onclick="openLightbox(this.src)">
+                <div style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.5); color:#fff; padding:5px 10px; border-radius:15px; font-size:0.7rem;">
+                    <i class="fa-solid fa-expand"></i> Tap to Zoom
+                </div>
+            </div>
+
+            <div class="pdp-content">
+                <h1 id="view-name" class="pdp-title">Product Name</h1>
+                <div id="view-price" class="pdp-price">₹0</div>
+                
+                <h3 style="font-size:1rem; margin-bottom:10px;">Description</h3>
+                <p id="view-desc" class="pdp-desc">
+                    Experience premium craftsmanship with this high-definition frame from Choundeshwari Digital & Yashraj Photo Frame. 
+                    Every piece is meticulously crafted using high-quality synthetic wood and features a crystal-clear, shatter-resistant glass front to ensure maximum durability. Our frames are designed to be water-resistant and dust-proof, making them perfect for preserving your cherished memories, devotional art, or home decor for a lifetime. 
+                    Whether you are looking for a gift or a centerpiece for your own home, our frames offer a blend of traditional elegance and modern longevity.
+                </p>
+
+                <div style="display:flex; gap:10px; margin-bottom:20px;">
+                    <span style="background:var(--surface); padding:5px 10px; border-radius:8px; font-size:0.8rem;">Teak Wood</span>
+                    <span style="background:var(--surface); padding:5px 10px; border-radius:8px; font-size:0.8rem;">Sparkle/Matt</span>
+                </div>
+            </div>
+
+            <div class="pdp-footer">
+                <button id="view-add-btn" class="btn-full" style="flex:1; margin-top:0; background:#f8c90c; color:#000;">Add to Cart</button>
+                <button id="view-buy-btn" class="btn-full" style="flex:1; margin-top:0;">Buy Now</button>
+            </div>
+        </div>
+
+    </main>
+
+    <nav class="nav-bar">
+        <div class="nav-item active" onclick="nav('home', this)">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" id="nav-shop" onclick="nav('shop', this)">
+            <i class="fa-solid fa-shop"></i>
+            <span>Shop</span>
+        </div>
+        <div class="nav-item" onclick="nav('visualizer', this)">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Try-On</span>
+        </div>
+        <div class="nav-item" id="nav-book" onclick="nav('book', this)">
+            <i class="fa-solid fa-phone"></i>
+            <span>Contact</span>
+        </div>
+    </nav>
+
+    <script>
+        const products = [
+            { id: 1, name: "Swami Samarth frame", price: 450, cat: "god", img: "img/swami.png" },
+            { id: 2, name: "Antique Gold Mirror", price: 150, cat: "mirror", img: "img/mirror01.png" },
+            { id: 3, name: "Abstract Decor Set", price: 450, cat: "decor", img: "img/decor01.png" },
+            { id: 4, name: "Ganpati 3D Frame", price: 850, cat: "god", img: "img/bappa2.png" },
+            { id: 5, name: "Hanumanji Frame", price: 550, cat: "god", img: "img/hanuman1.png" },
+            { id: 6, name: "Laxmi ji photo", price: 180, cat: "god", img: "img/laxmi1.png" },
+            { id: 7, name: "Minimalist White", price: 800, cat: "decor", img: "img/decore02.png" },
+            { id: 8, name: "Shree Krishna royal", price: 250, cat: "god", img: "img/krishna1.png" },
+            { id: 9, name: "Laxmi ji frame", price: 450, cat: "god", img: "img/laxmi2.png" },
+            { id: 10, name: "Vishnuji frame", price: 350, cat: "god", img: "img/vishnu1.png" },
+            { id: 11, name: "Shree Krishna black border frame", price: 180, cat: "god", img: "img/krishna2.png" },
+            { id: 12, name: "Collage Kit (Set of 4)", price: 250, cat: "decor", img: "img/decor03.png" },
+            { id: 13, name: "Chatrapati Shivaji Maharaj Golden Border Frame", price: 1800, cat: "chatrapati", img: "img/chatrapati3.png" },
+            { id: 14, name: "Chatrapati Shivaji Maharaj Golden Border Frame", price: 250, cat: "chatrapati", img: "img/chatrapati.png" },
+            { id: 15, name: "Shree Ram", price: 550, cat: "god", img: "img/ramji1.png" },
+            { id: 16, name: "Chatrapati Shivaji Maharaj Golden Border Frame", price: 800, cat: "chatrapati", img: "img/chatrapat01.png" },
+            { id: 17, name: "Shree Datta Maharaj", price: 250, cat: "god", img: "img/datta1.png" },
+            { id: 18, name: "ShivRana Black Border Frame", price: 1200, cat: "chatrapati", img: "img/chatrapati4.png" },
+            { id: 19, name: "Shree Vitthal", price: 210, cat: "god", img: "img/vitthal1.png" },
+            { id: 20, name: "Shree Krishna Golden border frame", price: 250, cat: "god", img: "img/krishna5.jpg" },
+            { id: 21, name: "couple black border gift frame", price: 850, cat: "custom", img: "img/customm1.png" },
+            { id: 22, name: "Giftway Newly Couple Custom Photo with Frame", price: 850, cat: "custom", img: "img/custumm2.png" },
+            { id: 23, name: "Personalized Picture Collage Photo Frame - Custom Anniversary Gift for Husband / Wife , Customized Photo Frame Collage for Valentine's Day", price: 950, cat: "custom", img: "img/custom3.png" },
+            { id: 24, name: "Personalized Picture Collage Photo gift Frame - Custom Anniversary Gift for Husband / Wife , Customized Photo Frame Collage for Valentine's Day", price: 950, cat: "custom", img: "img/cusmtom4.png" },
+            { id: 25, name: "Dr. Babasaheb Ambedkar photo frame.", price: 950, cat: "Dr. Ambedkar", img: "img/ambedkar1.png" },
+            { id: 26, name: "Dr. Babasaheb Ambedkar Black Border photo frame.", price: 950, cat: "Dr. Ambedkar", img: "img/ambedkar2.png" },
+        ];
+
+        let cart = [];
+        let videoStream = null;
+
+        window.onload = () => {
+            renderShop('all');
+            renderHome();
+            if(localStorage.getItem('theme') === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+            }
+        };
+
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function nav(screenId, el) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            if (screenId !== 'visualizer') stopCamera();
+            const logo = document.getElementById('brand-text');
+            if(screenId === 'shop') logo.innerHTML = "Yashraj <span>Frames</span>";
+            else logo.innerHTML = "Choundeshwari <span>Digital</span>";
+        }
+        
+        function openPage(id) {
+            nav(id, document.querySelector(`.nav-item[onclick*='${id}']`));
+        }
+
+        function renderHome() {
+            const container = document.getElementById('home-products');
+            container.innerHTML = "";
+            products.slice(0, 4).forEach(p => container.innerHTML += createCard(p));
+        }
+
+        function renderShop(filter) {
+            const container = document.getElementById('shop-container');
+            container.innerHTML = "";
+            let list = filter === 'all' ? products : products.filter(p => p.cat === filter);
+            list.forEach(p => container.innerHTML += createCard(p));
+        }
+
+        function createCard(p) {
+            return `
+                <div class="product-card" onclick="openProductPage(${p.id})">
+                    <img src="${p.img}" class="p-img">
+                    <div class="p-info">
+                        <div class="p-name">${p.name}</div>
+                        <div class="p-price">₹${p.price}</div>
+                    </div>
+                    <div class="card-actions">
+                        <div class="action-btn btn-try" onclick="event.stopPropagation(); previewFrame(${p.id})">
+                            <i class="fa-solid fa-street-view"></i>
+                        </div>
+                        <div class="action-btn btn-add" onclick="event.stopPropagation(); addToCart(${p.id})">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function searchProd(val) {
+            const container = document.getElementById('shop-container');
+            container.innerHTML = "";
+            const lower = val.toLowerCase();
+            const list = products.filter(p => p.name.toLowerCase().includes(lower) || p.cat.includes(lower));
+            list.forEach(p => container.innerHTML += createCard(p));
+        }
+
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            cart.push(item);
+            const badge = document.getElementById('cart-count');
+            badge.style.display = 'flex';
+            badge.innerText = cart.length;
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+            renderCartPage();
+        }
+
+        function renderCartPage() {
+            const list = document.getElementById('cart-items');
+            list.innerHTML = "";
+            let total = 0;
+            if(cart.length === 0) {
+                list.innerHTML = "<div style='text-align:center; color:var(--secondary); margin-top:50px;'>Cart is empty</div>";
+                document.getElementById('cart-total').innerText = "";
+                return;
+            }
+            cart.forEach((p, idx) => {
+                total += p.price;
+                list.innerHTML += `
+                    <div style="display:flex; gap:15px; background:var(--surface); padding:10px; border-radius:15px; border:1px solid var(--border-color);">
+                        <img src="${p.img}" style="width:60px; height:60px; border-radius:10px; object-fit:cover;">
+                        <div style="flex:1;">
+                            <div style="font-weight:700; font-size:0.9rem;">${p.name}</div>
+                            <div style="color:var(--accent); font-weight:700;">₹${p.price}</div>
+                        </div>
+                        <div onclick="remItem(${idx})" style="color:var(--danger); align-self:center; cursor:pointer;"><i class="fa-solid fa-trash"></i></div>
+                    </div>
+                `;
+            });
+            document.getElementById('cart-total').innerText = `Total: ₹${total}`;
+        }
+
+        function remItem(idx) {
+            cart.splice(idx, 1);
+            document.getElementById('cart-count').innerText = cart.length;
+            if(cart.length === 0) document.getElementById('cart-count').style.display = 'none';
+            renderCartPage();
+        }
+
+        function checkoutWA() {
+            if(cart.length === 0) return alert("Empty Cart");
+            let msg = "*NEW ORDER*%0A";
+            let total = 0;
+            cart.forEach(p => { msg += `%0A• ${p.name} - ₹${p.price}`; total += p.price; });
+            msg += `%0A%0A*TOTAL: ₹${total}*`;
+            window.open(`https://wa.me/917588598293?text=${msg}`);
+        }
+
+        function startCamera() {
+            const video = document.getElementById('camera-feed');
+            const img = document.getElementById('wall-img');
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                    .then(function(stream) {
+                        videoStream = stream;
+                        video.srcObject = stream;
+                        video.style.display = "block";
+                        img.style.display = "none";
+                    })
+                    .catch(function(err) {
+                        alert("Camera access denied.");
+                    });
+            } else {
+                alert("Camera API not supported.");
+            }
+        }
+
+        function stopCamera() {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+                document.getElementById('camera-feed').style.display = "none";
+                document.getElementById('wall-img').style.display = "block";
+            }
+        }
+
+        function loadWall(e) {
+            stopCamera();
+            document.getElementById('wall-img').src = URL.createObjectURL(e.target.files[0]);
+        }
+
+        function setFrame(el) {
+            document.querySelectorAll('.frame-opt').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('frame-overlay').src = el.src;
+        }
+
+        const frame = document.getElementById('frame-overlay');
+        let isDragging = false;
+        let startX, startY, initialLeft, initialTop;
+
+        frame.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            initialLeft = frame.offsetLeft;
+            initialTop = frame.offsetTop;
+        });
+
+        frame.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            const dx = currentX - startX;
+            const dy = currentY - startY;
+            frame.style.left = `${initialLeft + dx}px`;
+            frame.style.top = `${initialTop + dy}px`;
+        });
+
+        frame.addEventListener('touchend', () => { isDragging = false; });
+
+        function requestQuote() {
+            window.open(`https://wa.me/917588598293?text=Hi, I want a custom frame quote.`);
+        }
+        function sendBooking() {
+            const name = document.getElementById('cust-name').value;
+            const service = document.getElementById('cust-service').value;
+            if(!name) return alert("Enter Name");
+            window.open(`https://wa.me/917588598293?text=Hi, I am ${name}. I want to book: ${service}`);
+        }
+
+        function startVoiceSearch() {
+            const mic = document.getElementById('mic-btn');
+            const input = document.getElementById('search-input');
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'en-IN';
+                recognition.interimResults = false;
+                recognition.start();
+                mic.classList.add('listening');
+                input.placeholder = "Listening...";
+                recognition.onresult = function(event) {
+                    const text = event.results[0][0].transcript;
+                    input.value = text;
+                    searchProd(text);
+                    mic.classList.remove('listening');
+                    input.placeholder = "Search God, Decor...";
+                };
+                recognition.onend = function() {
+                    mic.classList.remove('listening');
+                    input.placeholder = "Search God, Decor...";
+                };
+                recognition.onerror = function(event) {
+                    mic.classList.remove('listening');
+                    input.placeholder = "Try again...";
+                };
+            } else {
+                alert("Voice search is not supported in this browser.");
+            }
+        }
+
+        function previewFrame(id) {
+            const item = products.find(p => p.id === id);
+            if (!item) return;
+            const navBtn = document.querySelector(".nav-item[onclick*='visualizer']");
+            nav('visualizer', navBtn);
+            const overlay = document.getElementById('frame-overlay');
+            overlay.src = item.img;
+        }
+
+       function openProductPage(id) {
+    const p = products.find(item => item.id === id);
+    if(!p) return;
+    
+    document.getElementById('view-img').src = p.img;
+    document.getElementById('view-name').innerText = p.name;
+    document.getElementById('view-price').innerText = `₹${p.price}`;
+    
+    const addBtn = document.getElementById('view-add-btn');
+    addBtn.onclick = () => { addToCart(p.id); };
+    
+    const buyBtn = document.getElementById('view-buy-btn');
+    buyBtn.onclick = () => { 
+        window.open(`https://wa.me/917588598293?text=Hi, I want to buy *${p.name}* - ₹${p.price}`);
+    };
+    
+    // Deactivate other screens
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    
+    // Activate product view
+    const productView = document.getElementById('product-view');
+    productView.classList.add('active');
+    
+    // HIDE NAV BAR
+    document.querySelector('.nav-bar').style.display = 'none';
+
+    // --- THE FIX ---
+    // Instead of window.scrollTo, we scroll the 'main' container to the top
+    document.querySelector('main').scrollTop = 0;
+}
+
+        function closeProduct() {
+            const shopNav = document.getElementById('nav-shop');
+            nav('shop', shopNav);
+            document.querySelector('.nav-bar').style.display = 'flex';
+        }
+
+        function openLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lb.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        // --- RESIZE FRAME ---
+function resizeFrame(val) {
+    const frame = document.getElementById('frame-overlay');
+    frame.style.width = val + 'px';
+}
+
+    </script>
+</body>
+</html>
