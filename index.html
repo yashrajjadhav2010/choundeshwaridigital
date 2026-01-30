@@ -7,6 +7,8 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="img/magictooolfinal.png">
+
 
     <style>
         :root {
@@ -1004,29 +1006,29 @@ input[type=range]::-webkit-slider-runnable-track {
 
     <script>
         const products = [
-            { id: 1, name: "Swami Samarth frame", price: 450, cat: "god", img: "img/swami.png" },
-            { id: 2, name: "Antique Gold Mirror", price: 150, cat: "mirror", img: "img/mirror01.png" },
-            { id: 3, name: "Abstract Decor Set", price: 450, cat: "decor", img: "img/decor01.png" },
-            { id: 4, name: "Ganpati 3D Frame", price: 850, cat: "god", img: "img/bappa2.png" },
-            { id: 5, name: "Hanumanji Frame", price: 550, cat: "god", img: "img/hanuman1.png" },
-            { id: 6, name: "Laxmi ji photo", price: 180, cat: "god", img: "img/laxmi1.png" },
-            { id: 7, name: "Minimalist White", price: 800, cat: "decor", img: "img/decore02.png" },
-            { id: 8, name: "Shree Krishna royal", price: 250, cat: "god", img: "img/krishna1.png" },
-            { id: 9, name: "Laxmi ji frame", price: 450, cat: "god", img: "img/laxmi2.png" },
+            { id: 1, name: "Swami Samarth frame", price: 450, cat: "god", img: "https://i.ibb.co/ycFpPkdv/swami.png" },
+            { id: 2, name: "Antique Gold Mirror", price: 150, cat: "mirror", img: "https://i.ibb.co/dsgVCgXv/mirror01.png" },
+            { id: 3, name: "Abstract Decor Set", price: 450, cat: "decor", img: "https://i.ibb.co/5Wy5sv3q/decor01.png" },
+            { id: 4, name: "Ganpati 3D Frame", price: 850, cat: "god", img: "https://i.ibb.co/SXkB0cxW/bappa2.png" },
+            { id: 5, name: "Hanumanji Frame", price: 550, cat: "god", img: "https://i.ibb.co/0jFDzyWQ/hanuman1.png" },
+            { id: 6, name: "Laxmi ji photo", price: 180, cat: "god", img: "https://i.ibb.co/ymTHpTvR/laxmi1.webp" },
+            { id: 7, name: "Minimalist White", price: 800, cat: "decor", img: "https://i.ibb.co/mVddqJXW/decore02.jpg" },
+            { id: 8, name: "Shree Krishna royal", price: 250, cat: "god", img: "https://i.ibb.co/3mZhqFQq/krishna1.png" },
+            { id: 9, name: "Laxmi ji frame", price: 450, cat: "god", img: "https://i.ibb.co/jvDHwKrt/laxmi2.png" },
             { id: 10, name: "Vishnuji frame", price: 350, cat: "god", img: "https://i.ibb.co/r2Q6rxtj/vishnu1.png" },
-            { id: 11, name: "Shree Krishna black border frame", price: 180, cat: "god", img: "img/krishna2.png" },
-            { id: 12, name: "Collage Kit (Set of 4)", price: 250, cat: "decor", img: "img/decor03.png" },
-            { id: 13, name: "Chatrapati Shivaji Maharaj Golden Border Frame", price: 1800, cat: "chatrapati", img: "img/chatrapati3.png" },
-            { id: 14, name: "Chatrapati Shivaji Maharaj Golden Border Frame", price: 250, cat: "chatrapati", img: "img/chatrapati.png" },
-            { id: 15, name: "Shree Ram", price: 550, cat: "god", img: "img/ramji1.png" },
-            { id: 16, name: "Chatrapati Shivaji Maharaj Golden Border Frame", price: 800, cat: "chatrapati", img: "img/chatrapat01.png" },
-            { id: 17, name: "Shree Datta Maharaj", price: 250, cat: "god", img: "img/datta1.png" },
-            { id: 18, name: "ShivRana Black Border Frame", price: 1200, cat: "chatrapati", img: "img/chatrapati4.png" },
-            { id: 19, name: "Shree Vitthal", price: 210, cat: "god", img: "img/vitthal1.png" },
-            { id: 20, name: "Shree Krishna Golden border frame", price: 250, cat: "god", img: "img/krishna5.jpg" },
-            { id: 21, name: "couple black border gift frame", price: 850, cat: "custom", img: "img/customm1.png" },
-            { id: 22, name: "Giftway Newly Couple Custom Photo with Frame", price: 850, cat: "custom", img: "img/custumm2.png" },
-            { id: 23, name: "Personalized Picture Collage Photo Frame - Custom Anniversary Gift for Husband / Wife , Customized Photo Frame Collage for Valentine's Day", price: 950, cat: "custom", img: "img/custom3.png" },
+            { id: 11, name: "Shree Krishna black border frame", price: 180, cat: "god", img: "https://i.ibb.co/ZRqdsK6k/krishna2.jpg" },
+            { id: 12, name: "Collage Kit (Set of 4)", price: 250, cat: "decor", img: "https://i.ibb.co/yFK0xGXs/decor03.jpg" },
+            { id: 13, name: "Chatrapati Shivaji Maharaj Golden Border Frame", price: 1800, cat: "chatrapati", img: "https://i.ibb.co/R4MsrbYs/chatrapati3.png" },
+            { id: 14, name: "Chatrapati Shivaji Maharaj Golden Border Frame", price: 250, cat: "chatrapati", img: "https://i.ibb.co/cSYj0njP/chatrapati.jpg" },
+            { id: 15, name: "Shree Ram", price: 550, cat: "god", img: "https://i.ibb.co/VYcW9GZ7/ramji1.png" },
+            { id: 16, name: "Chatrapati Shivaji Maharaj Golden Border Frame", price: 800, cat: "chatrapati", img: "https://i.ibb.co/FLLZV5z8/chatrapat01.webp" },
+            { id: 17, name: "Shree Datta Maharaj", price: 250, cat: "god", img: "https://i.ibb.co/234hxpHw/datta1.png" },
+            { id: 18, name: "ShivRana Black Border Frame", price: 1200, cat: "chatrapati", img: "https://i.ibb.co/Df4ss0h5/chatrapati4.png" },
+            { id: 19, name: "Shree Vitthal", price: 210, cat: "god", img: "https://i.ibb.co/Kzw49cjL/vitthal1.png" },
+            { id: 20, name: "Shree Krishna Golden border frame", price: 250, cat: "god", img: "https://i.ibb.co/k6qYhSPD/radhakishna1.png" },
+            { id: 21, name: "couple black border gift frame", price: 850, cat: "custom", img: "https://i.ibb.co/998px81V/customm1.png" },
+            { id: 22, name: "Giftway Newly Couple Custom Photo with Frame", price: 850, cat: "custom", img: "https://i.ibb.co/ZpLQsvKC/custumm2.png" },
+            { id: 23, name: "Personalized Picture Collage Photo Frame - Custom Anniversary Gift for Husband / Wife , Customized Photo Frame Collage for Valentine's Day", price: 950, cat: "custom", img: "https://i.ibb.co/1JZ7MJS2/custom3.png" },
             { id: 24, name: "Personalized Picture Collage Photo gift Frame - Custom Anniversary Gift for Husband / Wife , Customized Photo Frame Collage for Valentine's Day", price: 950, cat: "custom", img: "https://i.ibb.co/cS5MZ6nC/cusmtom4.jpg" },
             { id: 25, name: "Dr. Babasaheb Ambedkar photo frame.", price: 950, cat: "Dr. Ambedkar", img: "https://i.ibb.co/bM6DQzgc/ambedkar1.jpg" },
             { id: 26, name: "Dr. Babasaheb Ambedkar Black Border photo frame.", price: 950, cat: "Dr. Ambedkar", img: "https://i.ibb.co/yBpBc30r/ambedkar2.jpg" },
