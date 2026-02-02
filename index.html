@@ -199,7 +199,7 @@
 
         .search-box { position: relative; width: 100%; margin-bottom: 20px; }
         .search-input {
-            width: 100%; padding: 15px 50px 15px 15px; border-radius: 12px;
+            width: 100%; padding: 15px 50px 15px 15px; border-radius: 120px; 
             border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary);
             font-size: 1rem; outline: none;
         }
@@ -256,22 +256,22 @@
         .profile-avatar-box { text-align: center; margin-top: -60px; position: relative; padding-bottom: 10px; }
         .profile-avatar { width: 120px; height: 120px; border-radius: 50%; border: 5px solid var(--surface); object-fit: cover; }
         .verified-badge {
-    position: absolute;
-    bottom: 15px; 
-    left: 50%;
-    transform: translateX(35px); /* Centers it relative to the avatar circle */
-    background: #3897f0; 
-    color: #fff;
-    width: 24px; 
-    height: 24px;
-    border-radius: 50%;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    font-size: 0.8rem;
-    border: 2px solid var(--surface);
-    z-index: 5;
-}
+            position: absolute;
+            bottom: 15px; 
+            left: 50%;
+            transform: translateX(35px); /* Centers it relative to the avatar circle */
+            background: #3897f0; 
+            color: #fff;
+            width: 24px; 
+            height: 24px;
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 0.8rem;
+            border: 2px solid var(--surface);
+            z-index: 5;
+        }
         .profile-info { text-align: center; padding: 0 20px 20px; }
         .profile-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
         .profile-tag {
@@ -306,6 +306,16 @@
             main { flex: 1; padding: 40px 60px; margin-left: 260px; max-width: 1600px; }
             .product-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 30px; }
         }
+
+        /* --- ADDED AD STYLES --- */
+        .ad-banner-top {
+            width: 100%; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; margin-bottom: 20px; padding: 10px 0;
+            background-color: var(--surface); border-bottom: 1px solid var(--border-color);
+        }
+        .ad-box-content {
+            display: flex; justify-content: center; margin: 25px 0;
+        }
     </style>
 </head>
 <body>
@@ -335,6 +345,21 @@
     <main>
 
         <div id="home" class="screen active">
+
+            <div class="ad-banner-top">
+                <p style="font-size: 10px; color: var(--secondary); margin-bottom:5px;">Advertisement</p>
+                
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : 'd3ba4a1bfa681949d0bb6307d43b3196',
+                        'format' : 'iframe',
+                        'height' : 90,
+                        'width' : 728,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="https://www.highperformanceformat.com/d3ba4a1bfa681949d0bb6307d43b3196/invoke.js"></script>
+                </div>
             <div class="story-rail">
                 <div class="story-item" onclick="filterShop('Wedding')">
                     <div class="story-ring"><img src="https://i.ibb.co/1fSsj9MH/wedding.jpg"></div>
@@ -363,14 +388,26 @@
                 </div>
             </div>
 
+            <div class="ad-box-content">
+    
+    <script>
+      atOptions = {
+        'key' : '29eb7b0f5fdfb145ca680d8810d31ec2',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/29eb7b0f5fdfb145ca680d8810d31ec2/invoke.js"></script>
+    
+</div>
             <div class="section-title">
                 Trending Frames
                 <span onclick="nav('shop', document.getElementById('nav-shop'))">View All</span>
             </div>
             
             <div class="product-grid" id="home-products"></div>
-
-            
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center;">
                 <p style="font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">
@@ -454,7 +491,7 @@
                     <div class="profile-tag">Founder & Lead</div>
                     <div class="profile-stats">
                         <div class="stat-item"><span class="stat-val">20+</span><span class="stat-label">Legacy</span></div>
-                        <div class="stat-item"><img src="img/Gtrusted.png" style="width: 25px; height: 25px; border-radius: 50%; object-fit: cover; margin-bottom: 2px;"><span class="stat-label">G Trusted</span></div>
+                        <div class="stat-item"><img src="https://i.ibb.co/bj7sHb5X/Gtrusted.png" style="width: 25px; height: 25px; border-radius: 50%; object-fit: cover; margin-bottom: 2px;"><span class="stat-label">G Trusted</span></div>
                         <div class="stat-item"><span class="stat-val">4.8</span><span class="stat-label">Rating <i class="fa-solid fa-star" style="color:#f1c40f; font-size:0.7rem;"></i></span></div>
                     </div>
                     <div class="profile-actions">
