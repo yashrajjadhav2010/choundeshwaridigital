@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -203,6 +204,27 @@
             border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary);
             font-size: 1rem; outline: none;
         }
+
+        /* --- DYNAMIC FILTER BUTTONS --- */
+        .filter-btn {
+            padding: 8px 16px; 
+            background: var(--surface); 
+            color: var(--primary); 
+            border: 1px solid var(--border-color); 
+            border-radius: 20px; 
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap; /* Text ko ek line me rakhne ke liye */
+        }
+        
+        /* Jab button select hoga tab kaisa dikhega */
+        .filter-btn.active {
+            background: var(--primary); /* Light mode me Black, Dark mode me White */
+            color: var(--bg); 
+            border: 1px solid var(--primary);
+            font-weight: 700;
+        }
         .mic-icon {
             position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
             color: var(--secondary); font-size: 1.2rem; cursor: pointer; transition: 0.3s;
@@ -294,17 +316,80 @@
         .btn-secondary-action { background: transparent; border: 1px solid var(--border-color); color: var(--primary); }
 
         @media (min-width: 1024px) {
-            body { flex-direction: row; background: #e0dddd; }
-            .nav-bar {
-                top: 0; left: 0; width: 260px; height: 100vh; flex-direction: column;
-                justify-content: flex-start; padding-top: 120px; gap: 15px; border-top: none;
-                border-right: 1px solid rgba(0,0,0,0.06); background: #f3f0f0; align-items: flex-start;
+            body { 
+                flex-direction: row; 
+                background: var(--surface); /* Fixed for Dark Mode */
             }
-            header { width: 260px; height: 100px; left: 0; top: 0; background: transparent; border: none; justify-content: center; z-index: 500; }
-            .header-icons { display: none; }
-            .nav-item { flex-direction: row; gap: 15px; width: 90%; margin-left: 5%; padding: 15px 20px; border-radius: 12px; }
-            main { flex: 1; padding: 40px 60px; margin-left: 260px; max-width: 1600px; }
-            .product-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 30px; }
+            
+            /* --- Sidebar Navigation --- */
+            .nav-bar {
+                top: 0; left: 0; width: 280px; height: 100vh; flex-direction: column;
+                justify-content: flex-start; padding-top: 30px; gap: 10px; border-top: none;
+                border-right: 1px solid var(--border-color); background: var(--bg); 
+                align-items: center; z-index: 100;
+                box-shadow: 2px 0 15px rgba(0,0,0,0.03);
+            }
+            .nav-item { 
+                flex-direction: row; gap: 15px; width: 85%; margin-bottom: 5px;
+                padding: 15px 25px; border-radius: 15px; align-items: center;
+                justify-content: flex-start; transition: 0.3s ease;
+            }
+            .nav-item:hover { 
+                background: var(--surface); 
+                transform: translateX(5px); /* Smooth hover animation */
+            }
+            .nav-item span { font-size: 1rem; }
+            
+            /* --- Top Header (Icons & Logo) --- */
+            header { 
+                width: calc(100% - 280px); left: 280px; top: 0; 
+                background: var(--nav-bg); justify-content: space-between; 
+                padding: 0 60px; border-bottom: 1px solid var(--border-color);
+            }
+            .header-icons { display: flex; } /* Icons wapas laane ke liye */
+            
+            /* --- Main Content Area --- */
+            main { 
+                flex: 1; padding: 40px 60px; margin-left: 280px; 
+                max-width: 1400px; margin-top: 15px;
+            }
+            .product-grid { 
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+                gap: 30px; 
+            }
+            .promo-banner { height: 350px; } /* Bigger banner for desktop */
+            
+            /* --- Limit Widths for Clean UI --- */
+            .profile-container, .visualizer-box, #book > div, #cart-items { 
+                max-width: 800px; margin-left: auto; margin-right: auto; 
+            }
+            .btn-full { 
+                max-width: 800px; display: block; margin-left: auto; margin-right: auto; 
+            }
+
+            /* --- Premium Split-Screen Product View --- */
+            #product-view.active { 
+                display: flex; flex-direction: row; justify-content: center; 
+                align-items: center; background: rgba(0,0,0,0.8); 
+                backdrop-filter: blur(10px); padding: 40px;
+            }
+            .pdp-image-container { 
+                width: 40%; max-width: 500px; height: 75vh; 
+                border-radius: 24px 0 0 24px; box-shadow: var(--shadow);
+            }
+            .pdp-content { 
+                width: 40%; max-width: 500px; height: 75vh; margin-top: 0; 
+                border-radius: 0 24px 24px 0; padding: 40px; 
+                box-shadow: var(--shadow); overflow-y: auto;
+            }
+            .pdp-footer { 
+                position: static; width: 100%; box-shadow: none; 
+                padding: 20px 0 0 0; background: transparent;
+            }
+            .pdp-header { 
+                position: fixed; top: 30px; right: 40px; left: auto; 
+                background: rgba(255,255,255,0.2); 
+            }
         }
     </style>
 </head>
@@ -434,11 +519,54 @@
             </div>
         </div>
 
+        
+
         <div id="cart" class="screen">
             <h2 style="font-family:'Playfair Display'; margin-bottom:20px;">Your Cart</h2>
             <div id="cart-items" style="display:flex; flex-direction:column; gap:15px;"></div>
             <div id="cart-total" style="margin-top:20px; font-weight:800; font-size:1.2rem; text-align:right;"></div>
             <button class="btn-full" onclick="checkoutWA()">Checkout on WhatsApp</button>
+        </div>
+
+
+
+        <div id="magic-custom" class="screen">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:10px;">Frame Your Photo</h2>
+            <p style="color: var(--secondary); font-size: 0.9rem; margin-bottom: 20px;">Upload your picture and select a frame border.</p>
+            
+            <div class="btn-row" style="margin-bottom: 20px;">
+                <button class="btn-full" style="background: var(--accent); color: #fff; margin-top: 0;" onclick="document.getElementById('custom-upload').click()">
+                    <i class="fa-solid fa-upload"></i> Upload Your Photo
+                </button>
+                <input type="file" id="custom-upload" hidden accept="image/*" onchange="loadCustomPhoto(event)">
+            </div>
+
+            <div style="display: flex; justify-content: center; align-items: center; min-height: 250px; padding: 20px; background: var(--surface); border: 1px solid var(--border-color); border-radius: 15px; margin-bottom: 20px;">
+                <div id="frame-style-box" style="display: none; padding: 15px; background: #111; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transition: all 0.3s ease;">
+                    <img id="custom-photo-display" src="" style="display: block; max-width: 100%; max-height: 300px; border: 1px solid rgba(0,0,0,0.2);">
+                </div>
+            </div>
+
+            <h4 style="margin-bottom:15px;">Select Premium Frame</h4>
+            <div style="display:flex; overflow-x:auto; gap: 15px; padding-bottom: 15px; scrollbar-width: none;">
+                <button onclick="applyFrame('solid-black')" style="min-width: 60px; height: 60px; background: #111; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+                
+                <button onclick="applyFrame('texture-wood')" style="min-width: 60px; height: 60px; background: url('https://i.ibb.co/Hp4Hz7F6/fabric-texture.jpg'); background-size: cover; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+                
+                <button onclick="applyFrame('texture-gold')" style="min-width: 60px; height: 60px; background: url('https://i.ibb.co/4gVdHsdP/wood-7.jpg'); background-size: cover; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+                
+                <button onclick="applyFrame('texture-vintage')" style="min-width: 60px; height: 60px; background: url('https://i.ibb.co/jPCqy6wN/golden-wall-background.jpg'); background-size: cover; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+                
+                <button onclick="applyFrame('pattern-carved')" style="min-width: 60px; height: 60px; background-color: #C5A059; background-image: url('https://www.transparenttextures.com/patterns/arabesque.png'); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+                
+                <button onclick="applyFrame('solid-white')" style="min-width: 60px; height: 60px; background: #fff; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></button>
+
+                <button onclick="applyFrame('pattern-custom1')" style="min-width: 60px; height: 60px; background-image: url('https://i.ibb.co/rKcB3F7x/pattern1.png'); background-size: cover; border: 2px solid var(--border-color); border-radius: 4px; cursor: pointer;"></button>
+            </div>
+            
+            <button class="btn-full" style="margin-top: 20px;" onclick="window.open('https://wa.me/917588598293?text=Hi, I want to order a custom frame with my own photo!')">
+                <i class="fa-brands fa-whatsapp"></i> Order Custom Frame
+            </button>
         </div>
 
         <div id="book" class="screen">
@@ -555,6 +683,7 @@
         <div class="nav-item active" onclick="nav('home', this)"><i class="fa-solid fa-house"></i><span>Home</span></div>
         <div class="nav-item" id="nav-shop" onclick="nav('shop', this)"><i class="fa-solid fa-shop"></i><span>Shop</span></div>
         <div class="nav-item" onclick="nav('visualizer', this)"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Try-On</span></div>
+        <div class="nav-item" onclick="nav('magic-custom', this)"><i class="fa-solid fa-image-portrait"></i><span>Custom</span></div>
         <div class="nav-item" id="nav-book" onclick="nav('book', this)"><i class="fa-solid fa-phone"></i><span>Contact</span></div>
     </nav>
 
@@ -588,15 +717,26 @@
             { id: 26, name: "Dr. Babasaheb Ambedkar Black Border photo frame.", price: 950, cat: "Dr. Ambedkar", img: "https://i.ibb.co/yBpBc30r/ambedkar2.jpg" },
         ];
 
-        let cart = [];
+        // Load cart from LocalStorage if it exists, otherwise empty array
+        let cart = JSON.parse(localStorage.getItem('yashraj_cart')) || [];
         let videoStream = null;
 
         window.onload = () => {
             renderShop('all');
             renderHome();
+            
+            // Check Theme
             if(localStorage.getItem('theme') === 'dark') {
                 document.body.setAttribute('data-theme', 'dark');
                 document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            // Restore Cart Badge and List on load
+            if(cart.length > 0) {
+                const badge = document.getElementById('cart-count');
+                badge.style.display = 'flex';
+                badge.innerText = cart.length;
+                renderCartPage();
             }
         };
 
@@ -682,6 +822,10 @@
         function addToCart(id) {
             const item = products.find(p => p.id === id);
             cart.push(item);
+            
+            // Save updated cart to Local Storage
+            localStorage.setItem('yashraj_cart', JSON.stringify(cart));
+            
             const badge = document.getElementById('cart-count');
             badge.style.display = 'flex';
             badge.innerText = cart.length;
@@ -718,6 +862,10 @@
 
         function remItem(idx) {
             cart.splice(idx, 1);
+            
+            // Update Local Storage after removing an item
+            localStorage.setItem('yashraj_cart', JSON.stringify(cart));
+            
             document.getElementById('cart-count').innerText = cart.length;
             if(cart.length === 0) document.getElementById('cart-count').style.display = 'none';
             renderCartPage();
@@ -775,26 +923,40 @@
         let isDragging = false;
         let startX, startY, initialLeft, initialTop;
 
-        frame.addEventListener('touchstart', (e) => {
+        // Function to start dragging
+        const startDrag = (e) => {
             isDragging = true;
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
+            // Check if it's a mouse or touch event
+            startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
             initialLeft = frame.offsetLeft;
             initialTop = frame.offsetTop;
-        });
+        };
 
-        frame.addEventListener('touchmove', (e) => {
+        // Function to drag
+        const drag = (e) => {
             if (!isDragging) return;
-            e.preventDefault();
-            const currentX = e.touches[0].clientX;
-            const currentY = e.touches[0].clientY;
+            e.preventDefault(); // Prevents screen scrolling while dragging
+            const currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const currentY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
             const dx = currentX - startX;
             const dy = currentY - startY;
             frame.style.left = `${initialLeft + dx}px`;
             frame.style.top = `${initialTop + dy}px`;
-        });
+        };
 
-        frame.addEventListener('touchend', () => { isDragging = false; });
+        // Function to stop dragging
+        const stopDrag = () => { isDragging = false; };
+
+        // Mobile Touch Events
+        frame.addEventListener('touchstart', startDrag, { passive: false });
+        frame.addEventListener('touchmove', drag, { passive: false });
+        frame.addEventListener('touchend', stopDrag);
+
+        // Desktop Mouse Events
+        frame.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', drag, { passive: false });
+        document.addEventListener('mouseup', stopDrag);
 
         function requestQuote() {
             window.open(`https://wa.me/917588598293?text=Hi, I want a custom frame quote.`);
@@ -867,6 +1029,16 @@
             
             // Hide nav bar
             document.querySelector('.nav-bar').style.display = 'none';
+
+            // TELE OS Auto-Focus Jump: Focus directly jumps to the "Add to Cart" button when opened
+            if (document.body.classList.contains('tele-mode')) {
+                setTimeout(() => {
+                    addBtn.focus();
+                }, 100);
+            }
+        
+            // Hide nav bar
+            document.querySelector('.nav-bar').style.display = 'none';
         }
 
         function closeProduct() {
@@ -890,6 +1062,257 @@
             frame.style.width = val + 'px';
         }
 
+        // Naye Custom Section ke liye functions
+        // Naye Custom Section ke Functions
+        // Advanced Custom Texture Frame Functions
+        function loadCustomPhoto(e) {
+            const wrapper = document.getElementById('frame-style-box');
+            const img = document.getElementById('custom-photo-display');
+            img.src = URL.createObjectURL(e.target.files[0]);
+            wrapper.style.display = 'block'; // Wrapper ko visible karein
+            applyFrame('solid-black'); // Upload hote hi default black frame lag jaye
+        }
+
+        function applyFrame(styleType) {
+            const wrapper = document.getElementById('frame-style-box');
+            
+            if (wrapper.style.display === "none") {
+                alert("Please upload your photo first!");
+                return;
+            }
+
+            // Purani styling reset karna
+            wrapper.style.background = 'none';
+            wrapper.style.backgroundColor = 'transparent';
+            wrapper.style.backgroundImage = 'none';
+            wrapper.style.border = 'none';
+            
+            // Textures ke hisaab se Frame ki thickness (padding) aur background set karna
+            if (styleType === 'solid-black') {
+                wrapper.style.backgroundColor = '#111';
+                wrapper.style.padding = '15px';
+            } else if (styleType === 'solid-white') {
+                wrapper.style.backgroundColor = '#fff';
+                wrapper.style.padding = '15px';
+            } else if (styleType === 'texture-wood') {
+                wrapper.style.backgroundImage = 'url("https://i.ibb.co/Hp4Hz7F6/fabric-texture.jpg")';
+                wrapper.style.backgroundSize = 'cover';
+                wrapper.style.padding = '22px'; 
+            } else if (styleType === 'texture-gold') {
+                wrapper.style.backgroundImage = 'url("https://i.ibb.co/4gVdHsdP/wood-7.jpg")';
+                wrapper.style.backgroundSize = 'cover';
+                wrapper.style.padding = '13px'; 
+            } else if (styleType === 'texture-vintage') {
+                wrapper.style.backgroundImage = 'url("https://i.ibb.co/jPCqy6wN/golden-wall-background.jpg")';
+                wrapper.style.backgroundSize = 'cover';
+                wrapper.style.padding = '20px';
+            } else if (styleType === 'pattern-carved') {
+                wrapper.style.backgroundColor = '#C5A059';
+                wrapper.style.backgroundImage = 'url("https://www.transparenttextures.com/patterns/arabesque.png")';
+                wrapper.style.padding = '25px';
+                wrapper.style.border = '5px solid #8e733b'; 
+            } else if (styleType === 'pattern-custom1') {
+                // NEW PATTERN ADDED HERE
+                wrapper.style.backgroundImage = 'url("https://i.ibb.co/rKcB3F7x/pattern1.png")';
+                wrapper.style.backgroundRepeat = 'repeat'; 
+                wrapper.style.backgroundSize = 'auto'; 
+                wrapper.style.padding = '18px'; 
+                wrapper.style.border = '3px solid #333'; 
+            }
+        }
+
+
+
+        // ==========================================
+        // AMBIENT LIGHT SENSOR (AUTO THEME ADAPTATION)
+        // ==========================================
+        function initAutoLighting() {
+            // Check agar browser me Ambient Light Sensor support karta hai
+            if ('AmbientLightSensor' in window) {
+                try {
+                    const sensor = new AmbientLightSensor();
+                    
+                    sensor.addEventListener('reading', () => {
+                        const lux = sensor.illuminance;
+                        console.log('Current Light Intensity (Lux):', lux);
+                        
+                        // Agar light 50 Lux se kam hai (Dark Room)
+                        if (lux < 50) {
+                            if (document.body.getAttribute('data-theme') !== 'dark') {
+                                document.body.setAttribute('data-theme', 'dark');
+                                document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+                            }
+                        } 
+                        // Agar light bright hai (Normal/Daylight)
+                        else {
+                            if (document.body.getAttribute('data-theme') === 'dark') {
+                                document.body.removeAttribute('data-theme');
+                                document.getElementById('theme-icon').classList.replace('fa-sun', 'fa-moon');
+                            }
+                        }
+                    });
+
+                    sensor.addEventListener('error', (event) => {
+                        console.warn('Sensor error or permission denied:', event.error.message);
+                        applyFallbackTheme(); // Sensor block hone par smart fallback use karein
+                    });
+
+                    sensor.start();
+                } catch (err) {
+                    console.error('Ambient Light Sensor initialization failed:', err);
+                    applyFallbackTheme();
+                }
+            } else {
+                console.log('AmbientLightSensor API is not supported in this browser. Using smart fallback.');
+                applyFallbackTheme();
+            }
+        }
+
+        // SMART FALLBACK (Time-based & OS preference)
+        function applyFallbackTheme() {
+            // Agar phone me system-wide dark mode on hai
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+                return;
+            }
+            
+            // Ya phir agar raat ka time hai (6 PM se 6 AM tak)
+            const hour = new Date().getHours();
+            if (hour >= 18 || hour < 6) {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+            }
+        }
+
+        // Run this when page loads
+        window.addEventListener('load', initAutoLighting);
+
+
+
     </script>
+
+    <style>
+        /* 1. FOCUS RINGS: Tab dabane par (Desktop acc) aur TV remote dono pe chalega */
+        body.tele-mode .nav-item:focus, 
+        body.tele-mode .product-card:focus, 
+        body.tele-mode .action-btn:focus,
+        body.tele-mode button:focus, 
+        body.tele-mode .frame-opt:focus, 
+        body.tele-mode .story-item:focus, 
+        body.tele-mode .icon-btn:focus,
+        body.tele-mode input:focus,
+        body.tele-mode select:focus {
+            outline: 4px solid var(--accent) !important;
+            outline-offset: 4px;
+            transform: scale(1.05);
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.5);
+            z-index: 10;
+        }
+        
+        body.tele-mode *:focus { outline: none; }
+
+        /* 2. 10-FOOT BIG UI: Sirf Real Smart TVs par chalega (Desktop zoom nahi hoga) */
+        @media (min-width: 1024px) {
+            body.tv-big-ui .nav-bar { width: 320px; }
+            body.tv-big-ui header { width: calc(100% - 320px); left: 320px; }
+            body.tv-big-ui main { margin-left: 320px; padding: 50px 80px; }
+            body.tv-big-ui .nav-item { padding: 25px 30px; margin-bottom: 15px; }
+            body.tv-big-ui .nav-item i { font-size: 2rem; }
+            body.tv-big-ui .nav-item span { font-size: 1.4rem; }
+            body.tv-big-ui .product-grid { grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; }
+            body.tv-big-ui .p-img { height: 250px; }
+            body.tv-big-ui .p-name { font-size: 1.4rem; margin-bottom: 10px; }
+            body.tv-big-ui .p-price { font-size: 1.2rem; }
+            body.tv-big-ui .product-card:focus, body.tv-big-ui .nav-item:focus {
+                transform: scale(1.1) !important; 
+                outline: 6px solid var(--accent) !important;
+                outline-offset: 8px;
+            }
+            body.tv-big-ui .section-title { font-size: 1.8rem; margin-bottom: 25px; }
+        }
+
+
+
+        
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if user is actually on a Smart TV based on their device info
+            const isSmartTV = /SmartTV|Web0S|Tizen|Roku|AOSP|Android TV|AppleTV/i.test(navigator.userAgent);
+            let teleModeActive = false;
+
+            const enableTeleMode = (e) => {
+                // MANUAL TEST MODE FOR LAPTOP: Press 'Shift + T' to force TV Zoom Mode
+                if (e.shiftKey && e.key.toLowerCase() === 't') {
+                    document.body.classList.add('tv-big-ui'); 
+                }
+
+                // Agar Desktop user sirf arrow keys (scroll karne ke liye) daba raha hai, toh ignore karo
+                if (!isSmartTV && !document.body.classList.contains('tv-big-ui') && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                    return; 
+                }
+
+                const teleKeys = ['Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'];
+                
+                if (!teleModeActive && teleKeys.includes(e.key)) {
+                    teleModeActive = true;
+                    document.body.classList.add('tele-mode');
+                    
+                    // Agar asli TV hai, tabhi zoom/bada UI on karo
+                    if (isSmartTV) {
+                        document.body.classList.add('tv-big-ui');
+                    }
+                    
+                    const clickableElements = document.querySelectorAll('.nav-item, .product-card, .action-btn, button, .frame-opt, .story-item, .icon-btn, input, select');
+                    
+                    clickableElements.forEach(el => {
+                        if (!el.hasAttribute('tabindex')) {
+                            el.setAttribute('tabindex', '0');
+                            
+                            el.addEventListener('keydown', function(event) {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault(); 
+                                    this.click(); 
+                                    
+                                    // Auto-Focus Jump Logic
+                                    if (this.classList.contains('nav-item')) {
+                                        setTimeout(() => {
+                                            const activeScreen = document.querySelector('.screen.active');
+                                            if (activeScreen) {
+                                                const firstFocusable = activeScreen.querySelector('[tabindex="0"], button, input, select');
+                                                if (firstFocusable) firstFocusable.focus();
+                                            }
+                                        }, 100);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            };
+
+            window.addEventListener('keydown', enableTeleMode);
+
+            // TV Remote 'BACK' Button Support
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' || e.key === 'Backspace') {
+                    const productView = document.getElementById('product-view');
+                    const lightbox = document.getElementById('lightbox');
+                    
+                    if (productView && productView.classList.contains('active')) {
+                        e.preventDefault(); 
+                        closeProduct();
+                    } else if (lightbox && lightbox.style.display === 'flex') {
+                        e.preventDefault();
+                        closeLightbox();
+                    }
+                }
+            });
+        });
+    </script>
+   
 </body>
 </html>
