@@ -1,0 +1,1029 @@
+
+
+    <div id="toast" class="toast">Added to Cart</div>
+
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-close" onclick="closeLightbox()">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <img id="lightbox-img" src="">
+    </div>
+
+    <!-- Info Modal -->
+    <div id="info-modal" class="lightbox"
+        style="z-index: 12000; align-items: center; justify-content: center; padding: 20px;">
+        <div
+            style="background: var(--bg); color: var(--primary); padding: 30px; border-radius: 20px; max-width: 500px; width: 100%; position: relative; max-height: 80vh; overflow-y: auto;">
+            <div class="lightbox-close" onclick="closeInfoModal()"
+                style="top: 15px; right: 15px; width: 40px; height: 40px; background: rgba(0,0,0,0.1); color: var(--primary);">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <h2 id="info-modal-title" style="margin-bottom: 15px; font-family: 'Playfair Display';"></h2>
+            <div id="info-modal-content" style="line-height: 1.6; font-size: 0.95rem; color: var(--secondary);"></div>
+        </div>
+    </div>
+
+    <header>
+        <div class="brand-logo" id="brand-text">Yashraj <span>Frames</span></div>
+        <div class="header-icons">
+            <div class="icon-btn" onclick="openPage('settings')">
+                <i class="fa-solid fa-gear"></i>
+            </div>
+            <div class="icon-btn" onclick="openPage('cart')">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <div class="badge" id="cart-count">0</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <div id="home" class="screen active">
+            <div class="story-rail">
+                <div class="story-item" onclick="applyShopFilter('all'); nav('shop')">
+                    <div class="story-ring"><img src="https://i.ibb.co/1fSsj9MH/wedding.jpg"></div>
+                    <span data-i18n="story_wedding">Wedding</span>
+                </div>
+                <div class="story-item" onclick="applyShopFilter('all'); nav('shop')">
+                    <div class="story-ring"><img src="https://i.ibb.co/1JpPX4f6/baby.jpg"></div>
+                    <span data-i18n="story_baby">Baby</span>
+                </div>
+                <div class="story-item" onclick="openPage('visualizer')">
+                    <div class="story-ring"><img src="https://i.ibb.co/Z7mCbyj/magictooolfinal.png"></div>
+                    <span data-i18n="story_tryon">Try-On</span>
+                </div>
+                <div class="story-item" onclick="openPage('cart')">
+                    <div class="story-ring"><img src="https://i.ibb.co/p6DRcYL8/20943863.jpg"></div>
+                    <span data-i18n="story_orders">Orders</span>
+                </div>
+            </div>
+
+            <div class="promo-banner">
+                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=800">
+                <div class="promo-text">
+                    <h2 data-i18n="home_capture">Capture Memories</h2>
+                    <p data-i18n="home_frame">Frame your Golden Memories.</p>
+                    <button onclick="nav('book', document.getElementById('nav-book'))" data-i18n="home_framenow">Frame
+                        Now</button>
+                </div>
+            </div>
+
+            <div
+                style="position: relative; overflow: hidden; background: linear-gradient(145deg, #111 0%, #1a1a1a 100%); padding: 30px 25px; border-radius: 20px; margin-top: 30px; text-align: left; border: 1px solid rgba(197, 160, 89, 0.4); box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
+                <!-- Animated Glare -->
+                <div
+                    style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at center, rgba(197,160,89,0.15) 0%, transparent 45%); animation: spinGlow 15s linear infinite; pointer-events: none; z-index: 0;">
+                </div>
+
+                <!-- Floating Real Frames (Decoration) -->
+                <div
+                    style="position: absolute; right: -20px; top: 0px; z-index: 1; transform: rotate(12deg); opacity: 0.95; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6)); pointer-events: none;">
+                    <img src="https://i.ibb.co/3mZhqFQq/krishna1.png"
+                        style="width: 110px; border-radius: 10px; border: 3px solid var(--accent);">
+                </div>
+                <div
+                    style="position: absolute; right: 50px; bottom: -20px; z-index: 1; transform: rotate(-8deg); opacity: 0.8; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6)); pointer-events: none;">
+                    <img src="https://i.ibb.co/mVddqJXW/decore02.jpg"
+                        style="width: 90px; border-radius: 8px; border: 2px solid #fff;">
+                </div>
+
+                <div style="position: relative; z-index: 2; width: 65%;">
+                    <div
+                        style="display: inline-block; background: rgba(197, 160, 89, 0.15); padding: 5px 12px; border-radius: 20px; color: var(--accent); font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; border: 1px solid rgba(197, 160, 89, 0.3); backdrop-filter: blur(5px);">
+                        <i class="fa-solid fa-bolt" style="margin-right: 5px;"></i> Smart Assistant
+                    </div>
+                    <h3
+                        style="margin-bottom: 8px; font-family: 'Playfair Display', serif; color: #fff; font-size: 1.5rem; line-height: 1.2;">
+                        Confused?<br>Let us decide.</h3>
+                    <p style="font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-bottom: 20px; line-height: 1.5;">
+                        Answer 3 quick questions to find your exact perfect frame.</p>
+
+                    <button class="btn-full" onclick="document.getElementById('quiz-modal').style.display='flex'"
+                        style="background: linear-gradient(90deg, #c5a059, #e0c388); color: #000; padding: 12px 25px; border-radius: 30px; font-weight: 800; font-size: 0.9rem; box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4); border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; width: auto; margin-top: 0; transition: transform 0.2s;">
+                        Start Quiz
+                        <div
+                            style="background: #fff; color: #c5a059; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-arrow-right" style="font-size: 0.7rem;"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 30px;">
+                <div data-i18n="home_trend">Trending Frames</div>
+                <span onclick="nav('shop', document.getElementById('nav-shop'))" data-i18n="home_viewall">View
+                    All</span>
+            </div>
+
+            <div class="product-grid" id="home-products"></div>
+
+
+
+            <div class="section-title" style="margin-top: 30px;">
+                <div data-i18n="home_reviews">Customer Reviews</div>
+            </div>
+            <div style="display:flex; overflow-x:auto; gap:15px; padding-bottom:15px; scrollbar-width:none;">
+                <div
+                    style="min-width:280px; background:var(--surface); border:1px solid var(--border-color); border-radius:15px; padding:15px;">
+                    <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+                        <img src="https://i.ibb.co/S4kc3Xf9/unnamed3.jpg"
+                            style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                        <div>
+                            <div style="font-weight:700; font-size:0.9rem;">Yashraj Jadhav</div>
+                            <div style="color:#f1c40f; font-size:0.7rem;"><i class="fa-solid fa-star"></i><i
+                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p style="font-size:0.85rem; color:var(--secondary); font-style:italic;" data-i18n="review_1">"The
+                        frame quality is excellent! Very premium teak wood and fast delivery."</p>
+                </div>
+                <div
+                    style="min-width:280px; background:var(--surface); border:1px solid var(--border-color); border-radius:15px; padding:15px;">
+                    <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+                        <img src="https://i.ibb.co/TB9hFqkZ/unnamed-2.png"
+                            style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                        <div>
+                            <div style="font-weight:700; font-size:0.9rem;">Hanuman Bhujangrao Pandit</div>
+                            <div style="color:#f1c40f; font-size:0.7rem;"><i class="fa-solid fa-star"></i><i
+                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p style="font-size:0.85rem; color:var(--secondary); font-style:italic;" data-i18n="review_2">"Just
+                        Awesome...!"</p>
+                </div>
+                <div
+                    style="min-width:280px; background:var(--surface); border:1px solid var(--border-color); border-radius:15px; padding:15px;">
+                    <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+                        <img src="https://i.ibb.co/RkhznPbn/unnamed-1.png"
+                            style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                        <div>
+                            <div style="font-weight:700; font-size:0.9rem;">Razik Patel</div>
+                            <div style="color:#f1c40f; font-size:0.7rem;"><i class="fa-solid fa-star"></i><i
+                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"
+                                    style="color: rgb(255, 255, 255);"></i></div>
+                        </div>
+                    </div>
+                    <p style="font-size:0.85rem; color:var(--secondary); font-style:italic;" data-i18n="review_3">"Best
+                        photo frame studio in Jafrabad! The frame is a masterpiece."</p>
+                </div>
+            </div>
+
+            <div
+                style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center;">
+                <p data-i18n="home_follow"
+                    style="font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">
+                    Follow Our Work
+                </p>
+                <div style="display: flex; justify-content: center; gap: 20px; font-size: 1.5rem;">
+                    <a href="https://youtube.com/@choundeshwaridigital?si=_iH4Lam69TE8FUaB" target="_blank"
+                        style="color: #FF0000; transition: 0.2s;"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://instagram.com/yashraj_photo_frame" target="_blank"
+                        style="color: #E1306C; transition: 0.2s;"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/18KfViZVEd/" target="_blank"
+                        style="color: #1877F2; transition: 0.2s;"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://share.google/zjv5YaJFvRsYliJ9u" target="_blank"
+                        style="color: #4285F4; transition: 0.2s;"><i class="fa-brands fa-google"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="shop" class="screen">
+            <div class="search-box">
+                <input type="text" id="search-input" class="search-input" placeholder="Search God, Decor..."
+                    data-i18n-placeholder="shop_search" onkeyup="searchProd(this.value)">
+                <i class="fa-solid fa-microphone mic-icon" id="mic-btn" onclick="startVoiceSearch()"></i>
+            </div>
+
+            <div class="filter-btn-group"
+                style="display:flex; gap:10px; margin-bottom:15px; overflow-x:auto; scrollbar-width:none;">
+                <button class="shop-filter-btn active" data-category="all" onclick="applyShopFilter('all')"
+                    data-i18n="shop_all">All</button>
+                <button class="shop-filter-btn" data-category="god" onclick="applyShopFilter('god')"
+                    data-i18n="shop_god">God</button>
+                <button class="shop-filter-btn" data-category="decor" onclick="applyShopFilter('decor')"
+                    data-i18n="shop_decor">Decor</button>
+                <button class="shop-filter-btn" data-category="chatrapati" onclick="applyShopFilter('chatrapati')"
+                    data-i18n="shop_chatrapati">Chatrapati</button>
+                <button class="shop-filter-btn" data-category="custom" onclick="applyShopFilter('custom')"
+                    data-i18n="shop_custom">Custom</button>
+                <button class="shop-filter-btn" data-category="Dr. Ambedkar" onclick="applyShopFilter('Dr. Ambedkar')"
+                    data-i18n="shop_ambedkar">Dr.Ambedkar</button>
+            </div>
+
+            <div class="price-filter-container">
+                <div class="price-label-row">
+                    <span style="font-size: 0.9rem; font-weight: 700; color: var(--primary);"
+                        data-i18n="shop_max_price">Filter by Price</span>
+                    <span id="price-val" style="font-size: 1rem; font-weight: 800; color: var(--accent);">Rs.
+                        3000</span>
+                </div>
+                <div class="price-slider-wrapper">
+                    <input type="range" id="price-slider" min="100" max="3000" step="50" value="3000"
+                        oninput="updatePriceSlider(this.value)">
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: -5px;">
+                    <span style="font-size: 0.7rem; color: var(--secondary);">Rs. 100</span>
+                    <span style="font-size: 0.7rem; color: var(--secondary);">Rs. 3000</span>
+                </div>
+            </div>
+
+            <div class="product-grid" id="shop-container"></div>
+
+            <div
+                style="margin-top:30px; background:var(--accent); padding:20px; border-radius:15px; text-align:center; color:#fff;">
+                <h3 style="font-family:'Playfair Display'; margin-bottom:5px;" data-i18n="shop_custom_size">Custom Size?
+                </h3>
+                <p style="font-size:0.8rem; margin-bottom:10px; color:rgba(255,255,255,0.9);"
+                    data-i18n="shop_need_specific">Need a specific size frame? Get a quote.</p>
+                <button onclick="requestQuote()"
+                    style="background:#fff; color:#000; padding:10px 20px; border-radius:20px; border:none; font-weight:700;"
+                    data-i18n="shop_ask_price">Ask Price</button>
+            </div>
+        </div>
+
+        <div id="visualizer" class="screen">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:15px;" data-i18n="tryon_title">Magic Try-On</h2>
+            <div class="visualizer-box">
+                <video id="camera-feed" autoplay playsinline></video>
+                <img id="wall-img" class="wall-preview"
+                    src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600">
+                <img id="frame-overlay" class="frame-overlay"
+                    src="https://images.unsplash.com/photo-1549488497-61c022839b23?w=400">
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; padding:0 10px;">
+                <i class="fa-solid fa-image" style="font-size:0.8rem;"></i>
+                <input type="range" id="size-slider" min="50" max="300" value="150" style="flex:1;"
+                    oninput="resizeFrame(this.value)">
+                <i class="fa-solid fa-image" style="font-size:1.2rem;"></i>
+            </div>
+            <div class="btn-row" style="margin-bottom: 20px;">
+                <button class="btn-outline" onclick="startCamera()"><i class="fa-solid fa-video"></i> <span
+                        data-i18n="tryon_live">Live Camera</span></button>
+                <button class="btn-outline" onclick="document.getElementById('wall-up').click()"><i
+                        class="fa-solid fa-image"></i> <span data-i18n="tryon_upload">Upload Photo</span></button>
+                <input type="file" id="wall-up" hidden accept="image/*" onchange="loadWall(event)">
+            </div>
+
+            <h4 style="margin-top:20px; margin-bottom:10px; font-family:'Playfair Display';" data-i18n="tryon_showroom">
+                Virtual Showrooms</h4>
+            <div
+                style="display:flex; gap:15px; margin-bottom:20px; overflow-x:auto; padding-bottom:5px; scrollbar-width:none;">
+                <div onclick="setRoomBg('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800')"
+                    style="min-width:120px; height:80px; border-radius:12px; background: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=300') center/cover; border:2px solid var(--border-color); cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                </div>
+                <div onclick="setRoomBg('https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800')"
+                    style="min-width:120px; height:80px; border-radius:12px; background: url('https://images.unsplash.com/photo-1540518614846-7eded433c457?w=300') center/cover; border:2px solid var(--border-color); cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                </div>
+                <div onclick="setRoomBg('https://images.unsplash.com/photo-1536882240095-0379873feb4e?w=800')"
+                    style="min-width:120px; height:80px; border-radius:12px; background: url('https://images.unsplash.com/photo-1536882240095-0379873feb4e?w=300') center/cover; border:2px solid var(--border-color); cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+
+            <h4 style="margin-top:20px; margin-bottom:10px;" data-i18n="tryon_wall_color">Wall Color</h4>
+            <div
+                style="display:flex; gap:10px; margin-bottom:15px; overflow-x:auto; padding-bottom:5px; scrollbar-width:none;">
+                <button onclick="setWallColor('#ffffff')"
+                    style="min-width:35px; height:35px; border-radius:50%; border:2px solid var(--border-color); background:#ffffff;"></button>
+                <button onclick="setWallColor('#F5F5DC')"
+                    style="min-width:35px; height:35px; border-radius:50%; border:2px solid var(--border-color); background:#F5F5DC;"></button>
+                <button onclick="setWallColor('#FFD1DC')"
+                    style="min-width:35px; height:35px; border-radius:50%; border:2px solid var(--border-color); background:#FFD1DC;"></button>
+                <button onclick="setWallColor('#ADD8E6')"
+                    style="min-width:35px; height:35px; border-radius:50%; border:2px solid var(--border-color); background:#ADD8E6;"></button>
+                <button onclick="setWallColor('#98FB98')"
+                    style="min-width:35px; height:35px; border-radius:50%; border:2px solid var(--border-color); background:#98FB98;"></button>
+                <button onclick="setWallColor('#333333')"
+                    style="min-width:35px; height:35px; border-radius:50%; border:2px solid var(--border-color); background:#333333;"></button>
+                <input type="color" id="custom-wall-color" oninput="setWallColor(this.value)"
+                    style="min-width:35px; height:35px; border:none; padding:0; background:none; cursor:pointer;"
+                    value="#ff0000">
+            </div>
+
+            <h4 style="margin-top:20px; margin-bottom:10px;" data-i18n="tryon_select">Select Frame</h4>
+            <div style="display:flex; overflow-x:auto;">
+                <img src="https://i.ibb.co/k6qYhSPD/radhakishna1.png" class="frame-opt active" onclick="setFrame(this)">
+                <img src="https://i.ibb.co/ycFpPkdv/swami.png" class="frame-opt" onclick="setFrame(this)">
+                <img src="https://i.ibb.co/0jFDzyWQ/hanuman1.png" class="frame-opt" onclick="setFrame(this)">
+            </div>
+        </div>
+
+
+
+        <div id="cart" class="screen">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:20px;" data-i18n="cart_title">Your Cart</h2>
+            <div id="cart-items" style="display:flex; flex-direction:column; gap:15px;"></div>
+            <div id="cart-total" style="margin-top:20px; font-weight:800; font-size:1.2rem; text-align:right;"></div>
+            <button class="btn-full" onclick="checkoutWA()" data-i18n="cart_checkout"
+                style="margin-top: 25px; font-weight: 800; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);">Proceed
+                to Checkout</button>
+        </div>
+
+        <div id="checkout" class="screen">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:20px;">Secure Checkout</h2>
+            <div class="profile-container"
+                style="background: var(--surface); padding: 25px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <label
+                    style="font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; display: block;">Full
+                    Name *</label>
+                <input type="text" id="chk-name" placeholder="Sourabh Patil"
+                    style="width:100%; padding:15px; border-radius:12px; margin-bottom:20px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary); font-family: 'Urbanist', sans-serif;"
+                    required>
+
+                <label
+                    style="font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; display: block;">Phone
+                    Number *</label>
+                <input type="tel" id="chk-phone" placeholder="98XXXXXX20"
+                    style="width:100%; padding:15px; border-radius:12px; margin-bottom:20px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary); font-family: 'Urbanist', sans-serif;"
+                    required>
+
+                <label
+                    style="font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; display: block;">Delivery
+                    Address *</label>
+                <textarea id="chk-address" placeholder="Flat No, Street, Landmark"
+                    style="width:100%; padding:15px; border-radius:12px; margin-bottom:20px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary); font-family: 'Urbanist', sans-serif; resize: none;"
+                    rows="3" required></textarea>
+
+                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <div style="flex: 1;">
+                        <label
+                            style="font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; display: block;">City
+                            *</label>
+                        <input type="text" id="chk-city" placeholder="e.g. Pune"
+                            style="width:100%; padding:15px; border-radius:12px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary); font-family: 'Urbanist', sans-serif;"
+                            required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label
+                            style="font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; display: block;">Pin
+                            Code *</label>
+                        <input type="text" id="chk-pin" placeholder="e.g. 411001"
+                            style="width:100%; padding:15px; border-radius:12px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary); font-family: 'Urbanist', sans-serif;"
+                            required>
+                    </div>
+                </div>
+
+                <label
+                    style="font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; display: block;">Delivery
+                    Method</label>
+                <select id="chk-method"
+                    style="width:100%; padding:15px; border-radius:12px; margin-bottom:25px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary); font-family: 'Urbanist', sans-serif;">
+                    <option value="Standard Delivery (3-5 Days)">Standard Delivery (3-5 Days)</option>
+                    <option value="Express Delivery (1-2 Days)">Express Delivery (1-2 Days)</option>
+                </select>
+
+                <div
+                    style="margin-top:10px; border-top: 1px dashed var(--border-color); padding-top: 25px; display: flex; justify-content: space-between; align-items: center;">
+                    <span
+                        style="font-weight: 800; font-size: 1.1rem; color: var(--secondary); text-transform: uppercase;">Order
+                        Total:</span>
+                    <span id="chk-total-display" style="font-weight: 900; font-size: 1.6rem; color: var(--primary);">Rs.
+                        0</span>
+                </div>
+
+                <button class="btn-full" onclick="processCheckout()"
+                    style="margin-top: 30px; background: linear-gradient(90deg, #c5a059, #e0c388); color: #000; font-weight: 800; font-size: 1.1rem; box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4); border: none;">
+                    <i class="fa-brands fa-whatsapp" style="margin-right:8px; font-size: 1.3rem;"></i> Secure Order via
+                    WhatsApp
+                </button>
+                <button class="btn-full" onclick="nav('cart', null)"
+                    style="margin-top: 15px; background: transparent; color: var(--secondary); border: 1px solid var(--border-color); font-weight: 700;">Cancel</button>
+            </div>
+        </div>
+
+
+        <div id="settings" class="screen">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:20px;" data-i18n="settings_title">Settings</h2>
+
+            <div class="profile-container" style="padding: 20px;">
+                <h4 style="margin-bottom:15px;" data-i18n="language_select">Select Language</h4>
+                <select id="lang-select" onchange="changeLanguage(this.value)"
+                    style="width:100%; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid var(--border-color); background:var(--input-bg); color:var(--primary);">
+                    <option value="en">English</option>
+                    <option value="mr">मराठी (Marathi)</option>
+                    <option value="hi">हिंदी (Hindi)</option>
+                </select>
+
+                <div style="margin-top:20px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                    <h4 style="margin-bottom:15px;">App Theme</h4>
+                    <div
+                        style="display:flex; gap:10px; margin-bottom:20px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none;">
+                        <div onclick="setAppTheme('light')"
+                            style="min-width:45px; height:45px; border-radius:50%; background:#f0f0f0; border:3px solid var(--border-color); cursor:pointer;"
+                            title="Standard Light"></div>
+                        <div onclick="setAppTheme('dark')"
+                            style="min-width:45px; height:45px; border-radius:50%; background:#111; border:3px solid var(--border-color); cursor:pointer;"
+                            title="Standard Dark"></div>
+                        <div onclick="setAppTheme('royal')"
+                            style="min-width:45px; height:45px; border-radius:50%; background:#050A1F; border:3px solid #FFD700; cursor:pointer;"
+                            title="Royal Gold"></div>
+                        <div onclick="setAppTheme('forest')"
+                            style="min-width:45px; height:45px; border-radius:50%; background:#0A120A; border:3px solid #F4A261; cursor:pointer;"
+                            title="Forest Earth"></div>
+                        <div onclick="setAppTheme('midnight')"
+                            style="min-width:45px; height:45px; border-radius:50%; background:#1A0B2E; border:3px solid #00E676; cursor:pointer;"
+                            title="Midnight Glow"></div>
+                    </div>
+                </div>
+
+                <div style="border-top: 1px solid var(--border-color); padding-top: 20px;">
+                    <div id="install-app-btn"
+                        style="padding: 15px; margin-bottom:15px; border-radius:12px; background:var(--accent); color:#fff; cursor: pointer; display: flex; align-items:center; justify-content:center; font-weight:bold;"
+                        onclick="installPWA()">
+                        <i class="fa-solid fa-download" style="margin-right:10px;"></i> <span
+                            data-i18n="install_app">Install Yashraj Frames</span>
+                    </div>
+
+                    <div style="padding: 15px 0; border-bottom: 1px solid var(--border-color); cursor: pointer; display: flex; justify-content: space-between;"
+                        onclick="openSettingsModal('about')">
+                        <span data-i18n="about_us">About Us</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <div style="padding: 15px 0; border-bottom: 1px solid var(--border-color); cursor: pointer; display: flex; justify-content: space-between;"
+                        onclick="openSettingsModal('terms')">
+                        <span data-i18n="terms_service">Terms of Service</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <div style="padding: 15px 0; cursor: pointer; display: flex; justify-content: space-between;"
+                        onclick="openSettingsModal('privacy')">
+                        <span data-i18n="privacy_policy">Privacy Policy</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="magic-custom" class="screen">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:10px;" data-i18n="custom_title">Frame Your Photo
+            </h2>
+            <p style="color: var(--secondary); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="custom_subtitle">
+                Upload your picture and select a frame border.</p>
+
+            <div class="btn-row" style="margin-bottom: 15px;">
+                <button class="btn-full" style="background: var(--accent); color: #fff; margin-top: 0;"
+                    onclick="document.getElementById('custom-upload').click()">
+                    <i class="fa-solid fa-upload"></i> <span data-i18n="custom_upload">Upload Your Photo</span>
+                </button>
+                <input type="file" id="custom-upload" hidden accept="image/*" onchange="loadCustomPhoto(event)">
+            </div>
+
+            <input type="text" id="engrave-input" placeholder="Add custom text (e.g. Sourabh & Neha 2026)..."
+                oninput="document.getElementById('engrave-preview').innerText = this.value"
+                style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); background: var(--bg); color: var(--primary); margin-bottom: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.95rem;">
+
+            <div
+                style="display: flex; justify-content: center; align-items: center; min-height: 250px; padding: 20px; background: var(--surface); border: 1px solid var(--border-color); border-radius: 15px; margin-bottom: 20px;">
+                <div id="frame-style-box"
+                    style="display: none; position: relative; padding: 15px; background: #111; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transition: all 0.3s ease; overflow: hidden;">
+                    <img id="custom-photo-display" src=""
+                        style="display: block; max-width: 100%; max-height: 300px; border: 1px solid rgba(0,0,0,0.2); pointer-events: none;">
+                    <div id="engrave-preview"
+                        style="position: absolute; top: 90%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; font-family: 'Playfair Display', serif; font-size: 1.2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); cursor: move; white-space: nowrap; user-select: none; z-index: 10;"
+                        onmousedown="startDrag(event, this)" ontouchstart="startDrag(event, this)"></div>
+                </div>
+            </div>
+            <p
+                style="font-size: 0.8rem; text-align: center; color: var(--secondary); margin-top: -10px; margin-bottom: 20px;">
+                <i class="fa-solid fa-hand-pointer"></i> Drag the text to place it anywhere on the frame
+            </p>
+
+            <h4 style="margin-bottom:15px;" data-i18n="custom_select">Select Premium Frame</h4>
+            <div style="display:flex; overflow-x:auto; gap: 15px; padding-bottom: 15px; scrollbar-width: none;">
+                <button onclick="applyFrame('solid-black')"
+                    style="min-width: 60px; height: 60px; background: #111; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+
+                <button onclick="applyFrame('texture-wood')"
+                    style="min-width: 60px; height: 60px; background: url('https://i.ibb.co/Hp4Hz7F6/fabric-texture.jpg'); background-size: cover; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+
+                <button onclick="applyFrame('texture-gold')"
+                    style="min-width: 60px; height: 60px; background: url('https://i.ibb.co/4gVdHsdP/wood-7.jpg'); background-size: cover; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+
+                <button onclick="applyFrame('texture-vintage')"
+                    style="min-width: 60px; height: 60px; background: url('https://i.ibb.co/jPCqy6wN/golden-wall-background.jpg'); background-size: cover; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+
+                <button onclick="applyFrame('pattern-carved')"
+                    style="min-width: 60px; height: 60px; background-color: #C5A059; background-image: url('https://www.transparenttextures.com/patterns/arabesque.png'); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer;"></button>
+
+                <button onclick="applyFrame('solid-white')"
+                    style="min-width: 60px; height: 60px; background: #fff; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></button>
+
+                <button onclick="applyFrame('pattern-custom1')"
+                    style="min-width: 60px; height: 60px; background-image: url('https://i.ibb.co/rKcB3F7x/pattern1.png'); background-size: cover; border: 2px solid var(--border-color); border-radius: 4px; cursor: pointer;"></button>
+            </div>
+
+            <button class="btn-full" style="margin-top: 20px;" onclick="orderCustomFrame()">
+                <i class="fa-brands fa-whatsapp"></i> <span data-i18n="custom_order">Order Custom Frame</span>
+            </button>
+
+            <div style="text-align: center; margin-top: 30px; padding-bottom: 20px;">
+                <p style="font-size: 0.75rem; color: var(--text-muted); opacity: 0.7; font-style: italic;">
+                    <i class="fa-solid fa-circle-info" style="margin-right: 5px;"></i>
+                    <span data-i18n="custom_note">Please note: The visual preview may slightly differ from the actual
+                        product. We are continuously working to improve this feature.</span>
+                </p>
+            </div>
+        </div>
+
+        <div id="book" class="screen">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:20px;" data-i18n="book_profile">Studio Profile</h2>
+            <div class="profile-container">
+                <div class="profile-cover"></div>
+                <div class="profile-avatar-box">
+                    <img src="https://i.ibb.co/b5QymJ6t/bb.png" class="profile-avatar">
+                    <div class="verified-badge"><i class="fa-solid fa-check"></i></div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">Madhav Jadhav</div>
+                    <div class="profile-tag" data-i18n="book_founder">Founder & Lead</div>
+                    <div class="profile-stats">
+                        <div class="stat-item"><span class="stat-val">20+</span><span class="stat-label"
+                                data-i18n="book_legacy">Legacy</span></div>
+                        <div class="stat-item"><img src="https://i.ibb.co/bj7sHb5X/Gtrusted.png"
+                                style="width: 25px; height: 25px; border-radius: 50%; object-fit: cover; margin-bottom: 2px;"><span
+                                class="stat-label">G Trusted</span></div>
+                        <div class="stat-item"><span class="stat-val">4.8</span><span class="stat-label"><span
+                                    data-i18n="book_rating">Rating</span> <i class="fa-solid fa-star"
+                                    style="color:#f1c40f; font-size:0.7rem;"></i></span></div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="action-btn-lg btn-primary-action"
+                            onclick="window.location.href='tel:+917588598293'"><i class="fa-solid fa-phone"></i> <span
+                                data-i18n="book_call">Call Now</span></button>
+                        <button class="action-btn-lg btn-secondary-action"
+                            onclick="window.open('https://wa.me/917588598293')"><i class="fa-brands fa-whatsapp"></i>
+                            <span data-i18n="book_chat">Chat</span></button>
+                    </div>
+                </div>
+            </div>
+            <h4 style="margin-bottom:15px; font-weight:800; display:flex; align-items:center; gap:8px;"><i
+                    class="fa-solid fa-calendar-check" style="color:var(--accent);"></i> <span
+                    data-i18n="book_session">Book a Session</span></h4>
+            <div
+                style="background:var(--surface); padding:20px; border-radius:24px; border:1px solid var(--border-color);">
+                <input type="text" id="cust-name" placeholder="Your Name" data-i18n-placeholder="book_name"
+                    style="width:100%; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary);">
+                <select id="cust-service"
+                    style="width:100%; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid var(--border-color); background:var(--bg); color:var(--primary);">
+                    <option data-i18n="book_opt1">Wedding Photography</option>
+                    <option data-i18n="book_opt2">Baby Shoot</option>
+                    <option data-i18n="book_opt3">Pre-Wedding</option>
+                    <option data-i18n="book_opt4">Passport Photo</option>
+                    <option data-i18n="book_opt5">Event Videography</option>
+                </select>
+                <button class="btn-full" onclick="sendBooking()"
+                    style="margin-top:5px; background:var(--accent); color:#fff;" data-i18n="book_req">Request
+                    Booking</button>
+            </div>
+
+            <div
+                style="margin-bottom: 30px; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border);">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.558592719452!2d76.0140814!3d20.1940962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bda3f7c05450eef%3A0xf23ca5c04c7f1dea!2sYashraj%20Photo%20Frame!5e0!3m2!1sen!2sin!4v1771836205344!5m2!1sen!2sin"
+                    width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+                <div style="background: var(--card-bg); padding: 15px;">
+                    <h3 style="margin: 0 0 5px; font-size: 16px;" data-i18n="book_visit">Visit Our Studio</h3>
+                    <p style="margin: 0; font-size: 12px; color: var(--text-dim);" data-i18n="book_address">
+                        Chatrapati Shivaji Maharaj Market Yard, Near HDFC Bank<br>
+                        Open Mon-Sun: 9:00 AM - 7:00 PM
+                    </p>
+                    <button
+                        onclick="window.open('https://maps.google.com/?q=Yashraj+Photo+Frame+Jafrabad+Maharashtra', '_blank')"
+                        style="margin-top: 10px; width: 100%; padding: 10px; background: var(--input-bg); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; font-size: 12px; cursor: pointer;">
+                        <i class="fa-solid fa-diamond-turn-right"></i> <span data-i18n="book_dir">Get Directions</span>
+                    </button>
+                </div>
+            </div>
+            <div
+                style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center;">
+                <p style="font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;"
+                    data-i18n="home_follow">Follow Our Work</p>
+                <div style="display: flex; justify-content: center; gap: 20px; font-size: 1.5rem;">
+                    <a href="https://youtube.com/@choundeshwaridigital?si=_iH4Lam69TE8FUaB" target="_blank"
+                        style="color: #FF0000; transition: 0.2s;"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://instagram.com/yashraj_photo_frame" target="_blank"
+                        style="color: #E1306C; transition: 0.2s;"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/18KfViZVEd/" target="_blank"
+                        style="color: #1877F2; transition: 0.2s;"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://share.google/zjv5YaJFvRsYliJ9u" target="_blank"
+                        style="color: #4285F4; transition: 0.2s;"><i class="fa-brands fa-google"></i></a>
+                </div>
+            </div>
+            <!-- Premium Developer Credit Section -->
+            <div class="dev-credit-card">
+                <div class="dev-glow"></div>
+                <p class="dev-label" data-i18n="book_dev">Developed By</p>
+                <h3 class="dev-name">YASHRAJ JADHAV</h3>
+                <div class="dev-badges">
+                    <span><i class="fa-solid fa-code"></i> Full-Stack</span>
+                    <span><i class="fa-solid fa-wand-magic-sparkles"></i> UI/UX</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <style>
+        @media (min-width: 768px) {
+            .pdp-desktop-wrapper {
+                display: flex !important;
+                max-width: 1200px;
+                margin: 0 auto;
+                align-items: stretch;
+                padding: 60px 40px;
+                gap: 50px;
+                height: 100%;
+                overflow-y: auto;
+                justify-content: center;
+            }
+
+            .pdp-image-container {
+                flex: 0 0 50% !important;
+                max-width: 550px !important;
+                width: 100% !important;
+                height: 70vh !important;
+                border-radius: 24px !important;
+                position: sticky;
+                top: 60px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                border-bottom: none !important;
+                margin: 0 !important;
+            }
+
+            .pdp-info-wrapper {
+                flex: 0 0 50% !important;
+                max-width: 550px !important;
+                width: 100% !important;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 10px;
+                padding-bottom: 60px;
+                margin: 0 !important;
+            }
+
+            .pdp-content {
+                padding: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                max-width: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
+
+            .pdp-footer {
+                background: transparent !important;
+                border: none !important;
+                padding: 20px 0 0 0 !important;
+                backdrop-filter: none !important;
+                position: static !important;
+                width: 100% !important;
+            }
+
+            #product-view.active {
+                display: block !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                justify-content: flex-start !important;
+                padding: 0 !important;
+                background: var(--bg) !important;
+            }
+
+            .pdp-header {
+                position: absolute !important;
+                top: 20px !important;
+                left: 20px !important;
+                right: auto !important;
+                background: rgba(0, 0, 0, 0.6) !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .pdp-desktop-wrapper {
+                display: block;
+            }
+
+            .pdp-info-wrapper {
+                display: block;
+            }
+
+            .pdp-footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 10;
+            }
+        }
+    </style>
+    <div id="product-view">
+        <div class="pdp-header" onclick="closeProduct()"
+            style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.6); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; color: #fff; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.2); cursor: pointer; transition: 0.2s;">
+            <i class="fa-solid fa-arrow-left" style="font-size: 1.2rem;"></i>
+        </div>
+
+        <div class="pdp-desktop-wrapper">
+            <div class="pdp-image-container"
+                style="position: relative; height: 45vh; width: 100%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, var(--surface) 0%, #111 100%); border-bottom: 1px solid var(--border-color);">
+                <div
+                    style="position: absolute; top:0; left:0; right:0; bottom:0; background-image: url('https://www.transparenttextures.com/patterns/black-scales.png'); opacity: 0.3; z-index: 0;">
+                </div>
+                <img id="view-img" class="pdp-img" src="" onclick="openLightbox(this.src)"
+                    style="z-index: 1; max-height: 85%; max-width: 85%; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6)); transition: transform 0.3s ease; border-radius: 5px;">
+
+                <div style="position:absolute; bottom:20px; right:20px; background:rgba(0,0,0,0.7); color:#fff; padding:8px 15px; border-radius:20px; font-size:0.75rem; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; z-index: 2;"
+                    onclick="openLightbox(document.getElementById('view-img').src)">
+                    <i class="fa-solid fa-expand"></i> <span data-i18n="pdp_zoom">Tap to Zoom</span>
+                </div>
+
+                <div style="position:absolute; bottom:-22px; left:50%; transform: translateX(-50%); background: linear-gradient(90deg, #c5a059, #e0c388); padding: 12px 25px; border-radius: 30px; color: #000; font-weight: 800; font-size: 0.85rem; box-shadow: 0 8px 25px rgba(197, 160, 89, 0.4); cursor: pointer; display: flex; align-items: center; gap: 8px; z-index: 5; white-space: nowrap;"
+                    onclick="closeProduct(); nav('visualizer', document.querySelector('.nav-item:nth-child(3)'))">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Try in Your Room
+                </div>
+            </div>
+
+            <div class="pdp-info-wrapper">
+                <div class="pdp-content" style="padding: 40px 20px 20px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">
+                        <div style="flex: 1; padding-right: 15px;">
+                            <div
+                                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 5px; font-weight: 800;">
+                                Premium Gallery Frame</div>
+                            <h1 id="view-name" class="pdp-title"
+                                style="margin-bottom: 10px; font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.2;">
+                                Product Name</h1>
+                            <div id="view-price" class="pdp-price"
+                                style="color: var(--primary); font-size: 1.6rem; font-weight: 700;">Rs. 0</div>
+                        </div>
+                        <!-- Share Button -->
+                        <button id="view-share-btn"
+                            style="background: rgba(37, 211, 102, 0.1); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; flex-shrink: 0; transition: transform 0.2s, background 0.2s;"
+                            title="Share on WhatsApp" onmousedown="this.style.transform='scale(0.95)'"
+                            onmouseup="this.style.transform='scale(1)'">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </button>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div
+                        style="display: flex; background: var(--surface); border-radius: 15px; border: 1px solid var(--border-color); padding: 15px 0; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                        <div
+                            style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; text-align: center;">
+                            <i class="fa-solid fa-truck-fast" style="color: var(--accent); font-size: 1.3rem;"></i>
+                            <span
+                                style="font-size: 0.7rem; color: var(--secondary); font-weight: 600;">Fast<br>Delivery</span>
+                        </div>
+                        <div
+                            style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; text-align: center; border-left: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05);">
+                            <i class="fa-solid fa-shield-halved" style="color: var(--accent); font-size: 1.3rem;"></i>
+                            <span style="font-size: 0.7rem; color: var(--secondary); font-weight: 600;">Water &<br>Dust
+                                Proof</span>
+                        </div>
+                        <div
+                            style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; text-align: center;">
+                            <i class="fa-solid fa-tree" style="color: var(--accent); font-size: 1.3rem;"></i>
+                            <span
+                                style="font-size: 0.7rem; color: var(--secondary); font-weight: 600;">Premium<br>Wood</span>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size:1.1rem; margin-bottom:12px; font-family: 'Playfair Display', serif;"
+                        data-i18n="pdp_desc_title">About this Frame</h3>
+                    <p id="view-desc" class="pdp-desc" data-i18n="pdp_desc_text"
+                        style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.9rem; margin-bottom: 25px;">
+                        Experience premium craftsmanship with this high-definition frame from Choundeshwari Digital &
+                        Yashraj Photo Frame.
+                        Every piece is meticulously crafted using high-quality synthetic wood and features a
+                        crystal-clear, shatter-resistant glass front to ensure maximum durability. Our frames are
+                        designed to be water-resistant and dust-proof, making them perfect for preserving your cherished
+                        memories, devotional art, or home decor for a lifetime.
+                        Whether you are looking for a gift or a centerpiece for your own home, our frames offer a blend
+                        of traditional elegance and modern longevity.
+                    </p>
+
+                    <h3
+                        style="font-size:0.9rem; margin-bottom:10px; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px;">
+                        Tags & Features</h3>
+                    <div style="display:flex; flex-wrap: wrap; gap:10px; margin-bottom:30px;">
+                        <span
+                            style="background: rgba(197, 160, 89, 0.1); color: var(--accent); border: 1px solid rgba(197, 160, 89, 0.3); padding:8px 15px; border-radius:20px; font-size:0.8rem; font-weight:600;"
+                            data-i18n="pdp_tag1">Teak Wood Finish</span>
+                        <span
+                            style="background: rgba(197, 160, 89, 0.1); color: var(--accent); border: 1px solid rgba(197, 160, 89, 0.3); padding:8px 15px; border-radius:20px; font-size:0.8rem; font-weight:600;"
+                            data-i18n="pdp_tag2">Sparkle / Matte Choice</span>
+                    </div>
+                </div>
+
+                <div class="pdp-footer"
+                    style="padding: 15px 20px; background: rgba(17, 17, 17, 0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 15px;">
+                    <button id="view-add-btn" class="btn-full"
+                        style="flex:1; margin-top:0; background:var(--surface); color:#fff; border: 1px solid var(--border-color); font-weight: 700;"
+                        data-i18n="pdp_add">Add to Cart</button>
+                    <button id="view-buy-btn" class="btn-full"
+                        style="flex:1; margin-top:0; background: linear-gradient(90deg, #c5a059, #e0c388); color: #000; box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3); font-weight: 800; border: none;"
+                        data-i18n="pdp_buy">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <div class="nav-item active" onclick="nav('home', this)"><i class="fa-solid fa-house"></i><span
+                data-i18n="nav_home">Home</span></div>
+        <div class="nav-item" id="nav-shop" onclick="nav('shop', this)"><i class="fa-solid fa-shop"></i><span
+                data-i18n="nav_shop">Shop</span></div>
+        <div class="nav-item" onclick="nav('visualizer', this)"><i class="fa-solid fa-wand-magic-sparkles"></i><span
+                data-i18n="nav_tryon">Try-On</span></div>
+        <div class="nav-item" tabindex="0" onclick="nav('magic-custom', this)">
+            <i class="fa-solid fa-image-portrait"></i>
+            <span><span data-i18n="nav_custom">Custom</span> <span class="beta-badge">BETA</span></span>
+        </div>
+        <div class="nav-item" id="nav-book" onclick="nav('book', this)"><i class="fa-solid fa-phone"></i><span
+                data-i18n="nav_contact">Contact</span></div>
+    </nav>
+
+    
+
+    <style>
+        /* 1. FOCUS RINGS: Tab dabane par (Desktop acc) aur TV remote dono pe chalega */
+        body.tele-mode .nav-item:focus,
+        body.tele-mode .product-card:focus,
+        body.tele-mode .action-btn:focus,
+        body.tele-mode button:focus,
+        body.tele-mode .frame-opt:focus,
+        body.tele-mode .story-item:focus,
+        body.tele-mode .icon-btn:focus,
+        body.tele-mode input:focus,
+        body.tele-mode select:focus {
+            outline: 4px solid var(--accent) !important;
+            outline-offset: 4px;
+            transform: scale(1.05);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.5);
+            z-index: 10;
+        }
+
+        body.tele-mode *:focus {
+            outline: none;
+        }
+
+        /* 2. 10-FOOT BIG UI: Sirf Real Smart TVs par chalega (Desktop zoom nahi hoga) */
+        @media (min-width: 1024px) {
+            body.tv-big-ui .nav-bar {
+                width: 320px;
+            }
+
+            body.tv-big-ui header {
+                width: calc(100% - 320px);
+                left: 320px;
+            }
+
+            body.tv-big-ui main {
+                margin-left: 320px;
+                padding: 50px 80px;
+            }
+
+            body.tv-big-ui .nav-item {
+                padding: 25px 30px;
+                margin-bottom: 15px;
+            }
+
+            body.tv-big-ui .nav-item i {
+                font-size: 2rem;
+            }
+
+            body.tv-big-ui .nav-item span {
+                font-size: 1.4rem;
+            }
+
+            body.tv-big-ui .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 40px;
+            }
+
+            body.tv-big-ui .p-img {
+                height: 250px;
+            }
+
+            body.tv-big-ui .p-name {
+                font-size: 1.4rem;
+                margin-bottom: 10px;
+            }
+
+            body.tv-big-ui .p-price {
+                font-size: 1.2rem;
+            }
+
+            body.tv-big-ui .product-card:focus,
+            body.tv-big-ui .nav-item:focus {
+                transform: scale(1.1) !important;
+                outline: 6px solid var(--accent) !important;
+                outline-offset: 8px;
+            }
+
+            body.tv-big-ui .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+
+    
+
+    <!-- Quiz Modal -->
+    <div id="quiz-modal" class="lightbox"
+        style="z-index: 12000; align-items: center; justify-content: center; padding: 20px;">
+        <div
+            style="background: var(--bg); color: var(--primary); padding: 30px; border-radius: 20px; max-width: 350px; width: 100%; position: relative;">
+            <div class="lightbox-close" onclick="document.getElementById('quiz-modal').style.display='none'"
+                style="top: 15px; right: 15px; width: 40px; height: 40px; background: rgba(0,0,0,0.1); color: var(--primary);">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 20px; text-align: center;">Help Me Choose
+            </h3>
+
+            <label
+                style="font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; display: block;">Primary
+                Purpose:</label>
+            <select id="quiz-q1"
+                style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; background: var(--input-bg); color: var(--text-main); font-family: 'Urbanist', sans-serif;">
+                <option value="all">Open to Anything</option>
+                <option value="spiritual">Spiritual & Devotional</option>
+                <option value="decor">Modern Home Decor</option>
+                <option value="gift">Personalized Photo Gifts</option>
+            </select>
+
+            <label
+                style="font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; display: block;">Specific
+                Theme:</label>
+            <select id="quiz-q2"
+                style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; background: var(--input-bg); color: var(--text-main); font-family: 'Urbanist', sans-serif;">
+                <option value="all">Show Me The Best</option>
+                <option value="god">Hindu Deities</option>
+                <option value="leaders">Great Leaders & Kings</option>
+                <option value="abstract">Minimalist / Abstract</option>
+            </select>
+
+            <label
+                style="font-size: 0.85rem; font-weight: 700; color: var(--secondary); margin-bottom: 8px; display: block;">Exact
+                Budget Limit:</label>
+            <select id="quiz-q3"
+                style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px; background: var(--input-bg); color: var(--text-main); font-family: 'Urbanist', sans-serif;">
+                <option value="300">Under Rs. 300 (Affordable)</option>
+                <option value="700">Rs. 300 - Rs. 700 (Standard)</option>
+                <option value="3000">Above Rs. 700 (Premium)</option>
+            </select>
+
+            <button class="btn-full" onclick="runQuizFilter()"
+                style="margin-top: 5px; background: var(--accent); color: #fff;">Find Perfect Frames</button>
+        </div>
+    </div>
+    <!-- Y Infinity AI Assistant UI -->
+    <div id="ai-fab" onclick="toggleAIChat()">
+        <i class="fa-solid fa-infinity"></i>
+    </div>
+
+    <div id="ai-chat-window">
+        <div class="ai-header">
+            <img src="https://i.ibb.co/60vv3MMt/yicon4.png" alt="Y Infinity">
+            <div>
+                <h3 id="ai-name-header">Y Infinity</h3>
+                <small style="opacity: 0.8; font-size: 0.7rem;">AI Shopping Assistant</small>
+            </div>
+        </div>
+        <div id="ai-messages">
+            <!-- Messages will appear here -->
+        </div>
+        <div id="ai-typing" class="typing">
+            <div class="infinity-loader">
+                <svg class="infinity-svg" viewBox="0 0 100 50">
+                    <path class="infinity-path"
+                        d="M25,10 C15,10 10,15 10,25 C10,35 15,40 25,40 C35,40 45,35 50,25 C55,15 65,10 75,10 C85,10 90,15 90,25 C90,35 85,40 75,40 C65,40 55,35 50,25 C45,15 35,10 25,10 Z" />
+                </svg>
+                <span class="typing-text">Y Infinity is thinking...</span>
+            </div>
+        </div>
+        <div class="ai-input-area">
+            <input type="text" id="ai-input-text" class="ai-input" placeholder="Ask Y Infinity...">
+            <button class="ai-send" onclick="handleAISend()">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    <!-- Premium Offline Screen -->
+    <div id="offline-screen" class="offline-overlay">
+        <div class="offline-content">
+            <div class="broken-frame-container">
+                <div class="broken-frame"></div>
+                <i class="fa-solid fa-wifi-slash offline-icon"></i>
+            </div>
+            <h1 class="offline-title" data-i18n="offline_title">Connection Lost</h1>
+            <p class="offline-text" data-i18n="offline_text">It seems the frame bridge is temporarily down. Check your
+                connection to continue framing.</p>
+            <button class="retry-btn" onclick="location.reload()" data-i18n="offline_retry">Retry Connection</button>
+        </div>
+    </div>
